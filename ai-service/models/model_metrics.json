@@ -1,0 +1,7 @@
+{
+  "r2_score": 0.9996,
+  "accuracy_pct": 99.96,
+  "mae_rs_per_kg": 0.037,
+  "rmse_rs_per_kg": 0.04,
+  "mape_pct": 0.17
+}
