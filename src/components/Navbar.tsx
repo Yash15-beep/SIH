@@ -1,16 +1,18 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth-context';
 import { Sprout, ShoppingBag, TrendingUp, ShieldCheck, Truck, Users, Globe2, ArrowRightLeft } from 'lucide-react';
+import { AuthModal } from '@/components/AuthModal';
 
 export function Navbar() {
   const pathname = usePathname();
   const { language, toggleLanguage, t } = useLanguage();
   const { currentUser, switchDemoUser } = useAuth();
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
 
   const navLinks = [
     { href: '/', label: t('nav_home'), icon: Sprout },
@@ -103,33 +105,46 @@ export function Navbar() {
             </div>
           </Link>
 
-          {/* Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => {
-              const Icon = link.icon;
-              const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition ${
-                    isActive
-                      ? link.highlight
-                        ? 'bg-amber-100 text-amber-900 font-semibold'
-                        : 'bg-brand-50 text-brand-800 font-semibold'
-                      : link.highlight
-                      ? 'text-amber-700 hover:bg-amber-50'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                  }`}
-                >
-                  <Icon className={`w-4 h-4 ${isActive ? (link.highlight ? 'text-amber-700' : 'text-brand-700') : 'text-slate-400'}`} />
-                  {link.label}
-                </Link>
-              );
-            })}
-          </nav>
+          {/* Navigation Links & Auth Trigger */}
+          <div className="hidden md:flex items-center gap-2">
+            <nav className="flex items-center gap-1">
+              {navLinks.map((link) => {
+                const Icon = link.icon;
+                const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition ${
+                      isActive
+                        ? link.highlight
+                          ? 'bg-amber-100 text-amber-900 font-bold'
+                          : 'bg-brand-50 text-brand-800 font-bold'
+                        : link.highlight
+                        ? 'text-amber-700 hover:bg-amber-50'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    }`}
+                  >
+                    <Icon className={`w-3.5 h-3.5 ${isActive ? (link.highlight ? 'text-amber-700' : 'text-brand-700') : 'text-slate-400'}`} />
+                    {link.label}
+                  </Link>
+                );
+              })}
+            </nav>
+
+            <button
+              onClick={() => setIsAuthOpen(true)}
+              className="ml-2 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm"
+            >
+              <Users className="w-3.5 h-3.5 text-emerald-400" />
+              <span>{currentUser ? currentUser.name.split(' ')[0] : 'Sign In'}</span>
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* Supabase Auth Modal */}
+      <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
     </header>
   );
 }

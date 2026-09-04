@@ -75,4 +75,13 @@
     * Upgraded Orders Tracking Center in [orders/page.tsx](file:///e:/SIH/src/app/orders/page.tsx) with 5-stage interactive stepper (`placed` -> `confirmed` -> `routed` -> `out_for_delivery` -> `delivered`), delivery OTP modal (`5824`), instant green Escrow Payout banner, and DoCA price waterfall breakdown.
     * Built bilingual real-time SMS & WhatsApp notification drawer simulator in [NotificationSimulator.tsx](file:///e:/SIH/src/components/NotificationSimulator.tsx) and mounted in [layout.tsx](file:///e:/SIH/src/app/layout.tsx).
 * **Verification**: Verified end-to-end with Next.js production build (`npm run build`, 24/24 static and dynamic routes compiled with 0 errors).
+### [2026-09-04] Supabase SSR Client Helpers, JWT Token Authentication, & Next.js Edge Middleware
+* **Issue**: Implement Supabase authentication architecture, JWT token lifecycle management, Next.js Edge middleware session refresh, and interactive Login/Signup Modal with role-based fast persona access.
+* **Resolution**:
+    * Created Supabase SSR browser client in [supabase-browser.ts](file:///e:/SIH/src/lib/supabase-browser.ts) and server cookie client in [supabase-server.ts](file:///e:/SIH/src/lib/supabase-server.ts).
+    * Created Next.js Edge Middleware in [middleware.ts](file:///e:/SIH/src/middleware.ts) for automatic session refreshing and JWT token validation.
+    * Created Auth REST API routes in [signup/route.ts](file:///e:/SIH/src/app/api/auth/signup/route.ts), [login/route.ts](file:///e:/SIH/src/app/api/auth/login/route.ts), and [logout/route.ts](file:///e:/SIH/src/app/api/auth/logout/route.ts).
+    * Created interactive [AuthModal.tsx](file:///e:/SIH/src/components/AuthModal.tsx) supporting role selection (Farmer, Consumer, Bulk Buyer, Transporter, DoCA Official) and 1-click Fast-Login evaluation buttons.
+    * Integrated Auth trigger and active user profile badge into [Navbar.tsx](file:///e:/SIH/src/components/Navbar.tsx).
+* **Verification**: Verified with full Next.js production build (`npm run build`, 27/27 static/dynamic routes + Edge Middleware compiled with 0 errors).
 
