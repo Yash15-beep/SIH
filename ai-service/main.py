@@ -1,20 +1,26 @@
 """
 KisanSetu AI Microservice (FastAPI)
-Provides Demand & Price Forecasting and VRP Multi-Stop Route Optimization endpoints.
+Production AI Engine for SIH 2026 Problem Statement 26033:
+- Agmarknet Method 1 Live Data Ingestion
+- Adaptive AI Fair Pricing & DoCA Margin Breakdown
+- 7-Day Time-Series Demand & Volatility Forecaster
+- Vehicle Routing Problem (VRP) Logistics Clustering
 """
 
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, Body, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
 
-from forecasting import forecast_commodity_demand
-from route_optimizer import optimize_multi_stop_route
+from agmarknet_client import agmarknet_client
+from price_model import price_model
+from forecasting_model import forecast_model
+from vrp_optimizer import vrp_optimizer
 
 app = FastAPI(
     title="KisanSetu AI Microservice",
-    description="Statistical Agmarknet Time-Series Forecaster and VRP Logistics Engine for SIH 2026 PS 26033",
-    version="1.0.0"
+    description="Adaptive AI Fair Pricing, Agmarknet Ingestion, Time-Series Forecasting & VRP Logistics Engine",
+    version="2.0.0"
 )
 
 app.add_middleware(
@@ -25,56 +31,107 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class RouteOptimizationRequest(BaseModel):
-    stops: List[Dict[str, Any]]
+# Request Models
+class PricePredictionRequest(BaseModel):
+    crop: str = Field(..., example="Tomato")
+    quantity_kg: float = Field(100.0, example=500.0)
+    quality_grade: str = Field("Grade A", example="Grade A")
+    harvest_date: Optional[str] = Field(None, example="2026-09-04")
+    location: str = Field("Haryana", example="Dharuhera, Rewari")
+    farmer_lat: float = Field(28.2055, example=28.2055)
+    farmer_lng: float = Field(76.7944, example=76.7944)
+
+class VRPOptimizationRequest(BaseModel):
+    pickups: List[Dict[str, Any]]
+    destination: Dict[str, Any]
+    vehicle_capacity_kg: Optional[float] = 2500.0
+    driver_name: Optional[str] = "Harish Logistics (HR-38-AB-4122)"
+
+class AgmarknetSyncRequest(BaseModel):
+    commodity: Optional[str] = None
+    state: Optional[str] = None
+    limit: Optional[int] = 100
 
 @app.get("/health")
 def health_check():
-    return {"status": "ok", "service": "KisanSetu-AI-Microservice", "tier": "free-open-tier"}
+    return {
+        "status": "healthy",
+        "service": "KisanSetu-AI-Microservice",
+        "version": "2.0.0",
+        "models": ["AdaptivePriceModel", "DemandForecastModel", "VRPOptimizer", "AgmarknetClient"]
+    }
 
-@app.get("/ai/forecast")
-def get_forecast(
+# 1. Agmarknet Live Sync Endpoint (Method 1: data.gov.in)
+@app.post("/api/v1/sync/agmarknet")
+def sync_agmarknet(req: Optional[AgmarknetSyncRequest] = None):
+    commodity = req.commodity if req else None
+    state = req.state if req else None
+    limit = req.limit if req else 100
+    records = agmarknet_client.fetch_live_prices(commodity=commodity, state=state, limit=limit)
+    return {
+        "status": "success",
+        "records_count": len(records),
+        "data": records
+    }
+
+# 2. Adaptive AI Fair Pricing Endpoint
+@app.post("/api/v1/price/predict")
+def predict_fair_price(req: PricePredictionRequest):
+    result = price_model.predict_fair_price(
+        crop=req.crop,
+        quantity_kg=req.quantity_kg,
+        quality_grade=req.quality_grade,
+        harvest_date=req.harvest_date,
+        location=req.location,
+        farmer_lat=req.farmer_lat,
+        farmer_lng=req.farmer_lng
+    )
+    return {"status": "success", "data": result}
+
+# Legacy GET endpoint support for quick checks
+@app.get("/ai/suggest-price")
+def get_suggested_price(
     crop_name: str = Query("Tomato", description="Commodity crop name"),
-    region: str = Query("Rewari", description="Mandi region or district"),
-    days: int = Query(7, ge=1, le=30, description="Forecast horizon in days")
+    grade: str = Query("Grade A", description="Produce Quality Grade"),
+    region: str = Query("Rewari", description="Location")
 ):
-    result = forecast_commodity_demand(crop_name=crop_name, region=region, historical_records=[], days=days)
+    result = price_model.predict_fair_price(crop=crop_name, quality_grade=grade, location=region)
     return {"data": result}
 
-@app.get("/ai/suggest-price")
-def suggest_price(
-    crop_name: str = Query("Tomato", description="Commodity crop name"),
-    region: str = Query("Rewari", description="Mandi region or district")
+# 3. 7-Day Time-Series Demand Forecast
+@app.get("/api/v1/forecast/demand")
+def get_demand_forecast(
+    crop: str = Query("Tomato", description="Commodity crop name"),
+    region: str = Query("Delhi NCR", description="Target consumption region")
 ):
-    # Benchmark pricing derived from statistical models
-    benchmark_rates = {
-        "tomato": 24.0,
-        "onion": 28.0,
-        "potato": 18.0,
-        "mustard": 54.0,
-        "wheat": 26.0,
-        "cauliflower": 22.0,
-        "green chilli": 48.0
-    }
-    mandi_modal = benchmark_rates.get(crop_name.lower(), 25.0)
-    suggested_direct = round(mandi_modal * 0.95, 1)
+    result = forecast_model.generate_7day_forecast(crop=crop, region=region)
+    return {"status": "success", "data": result}
 
-    return {
-        "data": {
-            "crop_name": crop_name,
-            "region": region,
-            "suggested_price": suggested_direct,
-            "mandi_modal": mandi_modal,
-            "min_price": round(mandi_modal * 0.88, 1),
-            "max_price": round(mandi_modal * 1.15, 1),
-            "source": "Agmarknet Live API / Pre-warmed Cache",
-            "margin_benefit": f"Direct platform listing allows farmer to net ₹{suggested_direct}/kg without arhtiya commission deduction."
-        }
-    }
+@app.get("/ai/forecast")
+def get_forecast_legacy(
+    crop_name: str = Query("Tomato"),
+    region: str = Query("Delhi NCR")
+):
+    result = forecast_model.generate_7day_forecast(crop=crop_name, region=region)
+    return {"data": result}
+
+# 4. VRP Logistics Route Optimizer
+@app.post("/api/v1/logistics/optimize")
+def optimize_logistics(req: VRPOptimizationRequest):
+    result = vrp_optimizer.optimize_route(
+        pickups=req.pickups,
+        destination=req.destination,
+        vehicle_capacity_kg=req.vehicle_capacity_kg or 2500.0,
+        driver_name=req.driver_name or "Harish Logistics"
+    )
+    return {"status": "success", "data": result}
 
 @app.post("/ai/optimize-route")
-def optimize_route(request: RouteOptimizationRequest):
-    result = optimize_multi_stop_route(request.stops)
+def optimize_route_legacy(request: Dict[str, Any] = Body(...)):
+    stops = request.get("stops", [])
+    pickups = stops[:-1] if len(stops) > 1 else stops
+    destination = stops[-1] if len(stops) > 1 else {"name": "Central Hub", "lat": 28.6304, "lng": 77.2177}
+    result = vrp_optimizer.optimize_route(pickups=pickups, destination=destination)
     return {"data": result}
 
 if __name__ == "__main__":

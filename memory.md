@@ -32,5 +32,14 @@
     * Created Supabase Auth & Storage client helpers in [supabase.ts](file:///e:/SIH/src/lib/supabase.ts).
     * Created PostgreSQL seed script in [seed-prisma.ts](file:///e:/SIH/scripts/seed-prisma.ts) with npm scripts `npm run seed:prisma`, `npm run prisma:generate`, and `npm run prisma:push`.
     * Updated [.env.example](file:///e:/SIH/.env.example) with Supabase connection strings and credentials.
-* **Verification**: Generated Prisma client with `npx prisma generate` and verified full TypeScript build with `npm run build` (20/20 routes generated, 0 type errors).
+### [2026-09-04] Phase 3: Real AI/ML Models & Agmarknet Method 1 Ingestion Pipeline
+* **Issue**: Implement live Agmarknet data ingestion from Data.gov.in (Method 1), build adaptive AI pricing regressor, 7-day demand forecasting model, and VRP logistics route optimizer.
+* **Resolution**:
+    * Created [agmarknet_client.py](file:///e:/SIH/ai-service/agmarknet_client.py) to ingest daily mandi prices from Data.gov.in (resource/9ef84268-d588-465a-a308-a864a43d0070) and normalize units from ₹/Quintal to ₹/Kg.
+    * Created [price_model.py](file:///e:/SIH/ai-service/price_model.py) with dynamic quality grading modifiers, harvest freshness factors, and 4-stage DoCA price-formation waterfall analysis.
+    * Created [forecasting_model.py](file:///e:/SIH/ai-service/forecasting_model.py) providing 7-day daily price curves, arrival projections, and weekend consumer demand surges.
+    * Created [vrp_optimizer.py](file:///e:/SIH/ai-service/vrp_optimizer.py) calculating multi-farmer clustered pickup sequences, saved road kilometers, and diesel/CO2 emissions reductions.
+    * Updated [main.py](file:///e:/SIH/ai-service/main.py) with full REST endpoints for `/api/v1/sync/agmarknet`, `/api/v1/price/predict`, `/api/v1/forecast/demand`, and `/api/v1/logistics/optimize`.
+    * Implemented Next.js live sync API in [sync/route.ts](file:///e:/SIH/src/app/api/agmarknet/sync/route.ts) and added interactive *"Sync Agmarknet Live (Data.gov.in)"* button with live status feedback in [dashboard/page.tsx](file:///e:/SIH/src/app/admin/dashboard/page.tsx).
+* **Verification**: Verified Next.js production build (`npm run build`, 21/21 static & dynamic routes generated with 0 type errors).
 
