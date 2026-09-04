@@ -1,0 +1,81 @@
+{
+  "crops": [
+    {
+      "name": "Tomato",
+      "hindi_name": "टमाटर",
+      "category": "vegetable",
+      "default_unit": "kg",
+      "image": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=500&auto=format&fit=crop&q=80",
+      "typical_mandi_modal": 24,
+      "typical_retail": 45,
+      "typical_farmgate": 20
+    },
+    {
+      "name": "Onion",
+      "hindi_name": "प्याज",
+      "category": "vegetable",
+      "default_unit": "kg",
+      "image": "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=500&auto=format&fit=crop&q=80",
+      "typical_mandi_modal": 28,
+      "typical_retail": 52,
+      "typical_farmgate": 24
+    },
+    {
+      "name": "Potato",
+      "hindi_name": "आलू",
+      "category": "vegetable",
+      "default_unit": "kg",
+      "image": "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&auto=format&fit=crop&q=80",
+      "typical_mandi_modal": 18,
+      "typical_retail": 35,
+      "typical_farmgate": 15
+    },
+    {
+      "name": "Mustard",
+      "hindi_name": "सरसों",
+      "category": "oilseed",
+      "default_unit": "kg",
+      "image": "https://images.unsplash.com/photo-1508747703725-719777637510?w=500&auto=format&fit=crop&q=80",
+      "typical_mandi_modal": 54,
+      "typical_retail": 85,
+      "typical_farmgate": 50
+    },
+    {
+      "name": "Wheat",
+      "hindi_name": "गेहूं",
+      "category": "grain",
+      "default_unit": "kg",
+      "image": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&auto=format&fit=crop&q=80",
+      "typical_mandi_modal": 26,
+      "typical_retail": 40,
+      "typical_farmgate": 23
+    },
+    {
+      "name": "Cauliflower",
+      "hindi_name": "फूलगोभी",
+      "category": "vegetable",
+      "default_unit": "kg",
+      "image": "https://images.unsplash.com/photo-1568584711075-3d021a7c3ca3?w=500&auto=format&fit=crop&q=80",
+      "typical_mandi_modal": 22,
+      "typical_retail": 42,
+      "typical_farmgate": 18
+    },
+    {
+      "name": "Green Chilli",
+      "hindi_name": "हरी मिर्च",
+      "category": "vegetable",
+      "default_unit": "kg",
+      "image": "https://images.unsplash.com/photo-1588252303782-cb80119abd6d?w=500&auto=format&fit=crop&q=80",
+      "typical_mandi_modal": 48,
+      "typical_retail": 80,
+      "typical_farmgate": 42
+    }
+  ],
+  "mandis": [
+    { "name": "Rewari Mandi", "district": "Rewari", "state": "Haryana", "lat": 28.1920, "lng": 76.6200 },
+    { "name": "Gurugram Mandi", "district": "Gurugram", "state": "Haryana", "lat": 28.4595, "lng": 77.0266 },
+    { "name": "Karnal Mandi", "district": "Karnal", "state": "Haryana", "lat": 29.6857, "lng": 76.9905 },
+    { "name": "Azadpur Mandi", "district": "North Delhi", "state": "Delhi", "lat": 28.7126, "lng": 77.1729 },
+    { "name": "Rohtak Mandi", "district": "Rohtak", "state": "Haryana", "lat": 28.8955, "lng": 76.6066 }
+  ]
+}

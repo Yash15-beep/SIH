@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #FAFAF7;
+  --foreground: #0F172A;
+  --primary-green: #1B5E20;
+  --emerald-accent: #2E7D32;
+  --harvest-amber: #F59E0B;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Emil Kowalski & Apple Design Tactile Physics */
+button, a, input[type="button"], input[type="submit"] {
+  transition: transform 120ms ease-out, background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+
+button:active:not(:disabled), a.btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* Custom crisp scroller */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Pulse badge animation */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(0.98); }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

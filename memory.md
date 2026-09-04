@@ -1,0 +1,28 @@
+# Project Memory & Changes Log
+
+## Changes & Feature Log
+
+### [2026-09-04] Full End-to-End Implementation of KisanSetu Platform (SIH 2026 PS 26033)
+* **Issue**: Implementation of SIH 2026 Problem Statement 26033 ("Multiple intermediaries reduce farmers' earnings and increase consumer prices", Ministry of Consumer Affairs, Food & Public Distribution / DoCA).
+* **Resolution**:
+    * Created resilient database and seed data engine with 1000+ Agmarknet records and 7 demo personas in [db.ts](file:///e:/SIH/src/lib/db.ts) and [seed.ts](file:///e:/SIH/scripts/seed.ts).
+    * Built bilingual i18n support (English & Hindi) in [i18n.tsx](file:///e:/SIH/src/lib/i18n.tsx), [en.json](file:///e:/SIH/src/messages/en.json), and [hi.json](file:///e:/SIH/src/messages/hi.json).
+    * Built responsive Navigation Bar with instant persona quick-switcher in [Navbar.tsx](file:///e:/SIH/src/components/Navbar.tsx).
+    * Built Home Landing Page with live Agmarknet rate ticker, role gateways, and price-formation showcase in [page.tsx](file:///e:/SIH/src/app/page.tsx).
+    * Built Farmer Portal with 4-step low-literacy listing wizard and AI Mandi Price Advisor in [dashboard/page.tsx](file:///e:/SIH/src/app/farmer/dashboard/page.tsx) and [new/page.tsx](file:///e:/SIH/src/app/farmer/listing/new/page.tsx).
+    * Built Direct Consumer Marketplace with search, filter, and Leaflet map view in [marketplace/page.tsx](file:///e:/SIH/src/app/marketplace/page.tsx) and [checkout/[id]/page.tsx](file:///e:/SIH/src/app/checkout/[id]/page.tsx).
+    * Built Orders Tracking stepper in [orders/page.tsx](file:///e:/SIH/src/app/orders/page.tsx) and Bulk Demand Hub in [bulk/demand/page.tsx](file:///e:/SIH/src/app/bulk/demand/page.tsx).
+    * Built AI 7-Day Market Forecasting Center with Recharts time-series curves in [insights/page.tsx](file:///e:/SIH/src/app/insights/page.tsx).
+    * Built DoCA Transparency Dashboard with Price-Formation Waterfall Chart and Intermediary Margin Saved counters in [admin/dashboard/page.tsx](file:///e:/SIH/src/app/admin/dashboard/page.tsx).
+    * Built Smart Logistics VRP Route Optimizer with road distance and fuel saved counters in [admin/logistics/page.tsx](file:///e:/SIH/src/app/admin/logistics/page.tsx).
+    * Implemented complete REST APIs in [src/app/api/](file:///e:/SIH/src/app/api/) and Python FastAPI microservice in [ai-service/](file:///e:/SIH/ai-service/).
+
+### [2026-09-04] GitHub Repository & Dependency Files Setup
+* **Issue**: Prepare repository configuration and dependency files so teammates can clone and run the project seamlessly.
+* **Resolution**:
+    * Created [.gitignore](file:///e:/SIH/.gitignore) to exclude node_modules, .next build cache, .env secrets, and Python virtual environments.
+    * Created [.env.example](file:///e:/SIH/.env.example) with environment variable templates.
+    * Created [README.md](file:///e:/SIH/README.md) with comprehensive clone, installation, database seeding, and script running instructions.
+    * Created Python dependencies configuration in [requirements.txt](file:///e:/SIH/ai-service/requirements.txt).
+* **Verification**: Verified npm dependencies, seed script (`npm run seed`), and build output (`npm run build`).
+
