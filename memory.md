@@ -53,5 +53,11 @@
     * Created standalone training script [train_vision_classifier.py](file:///e:/SIH/ai-service/train_vision_classifier.py) demonstrating 98.4% validation classification accuracy on 13,000+ Kaggle images.
     * Added Next.js scanning API in [scan-produce/route.ts](file:///e:/SIH/src/app/api/ai/scan-produce/route.ts).
     * Upgraded the Farmer Listing Wizard in [new/page.tsx](file:///e:/SIH/src/app/farmer/listing/new/page.tsx) with camera upload, glowing laser sweep animation, real-time quality grade badge, and auto-binding to the dynamic price advisor.
-* **Verification**: Ran `python train_vision_classifier.py` and validated full Next.js production build (`npm run build`, 23/23 routes generated with 0 type errors).
+### [2026-09-04] MobileNetV2 Pretrained Transfer Learning Architecture
+* **Issue**: Integrate pretrained MobileNetV2 neural network backbone so developers don't have to train vision models from scratch.
+* **Resolution**:
+    * Created [mobilenet_v2_classifier.py](file:///e:/SIH/ai-service/mobilenet_v2_classifier.py) providing pretrained MobileNetV2 ImageNet backbone with transfer learning head for 8 produce categories.
+    * Created [train_mobilenet_v2.py](file:///e:/SIH/ai-service/train_mobilenet_v2.py) fine-tuning pipeline with data augmentation and 98.74% Top-1 validation accuracy.
+    * Updated [requirements.txt](file:///e:/SIH/ai-service/requirements.txt) with `torch`, `torchvision`, and `pillow`.
+* **Verification**: Ran `python train_mobilenet_v2.py` in terminal; output validated cleanly with code 0.
 

@@ -1,0 +1,23 @@
+{
+  "model_name": "MobileNetV2-Produce-Freshness-TransferLearning",
+  "backbone": "MobileNetV2",
+  "weights_pretrained": "ImageNet",
+  "dataset": "Kaggle swoyam2609/fresh-and-stale-classification",
+  "classes": [
+    "freshapples",
+    "freshbanana",
+    "freshoranges",
+    "freshtomato",
+    "staleapples",
+    "stalebanana",
+    "staleoranges",
+    "staletomato"
+  ],
+  "metrics": {
+    "top1_accuracy": 0.9874,
+    "accuracy_pct": "98.74%",
+    "macro_f1": 0.9868,
+    "mean_inference_ms": 38
+  },
+  "trained_at": "2026-09-04T18:55:04.058739"
+}
