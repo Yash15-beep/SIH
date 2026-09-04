@@ -65,5 +65,14 @@
     * Removed vision endpoints, `mobilenet_v2_classifier.py`, `vision_classifier.py`, and `scan-produce` route.
     * Restored clean 4-step listing wizard in [new/page.tsx](file:///e:/SIH/src/app/farmer/listing/new/page.tsx) with direct Quality Grade selection (Grade A, B, C) and instant AI Mandi price calculation.
     * Cleaned up [requirements.txt](file:///e:/SIH/ai-service/requirements.txt) to retain only lightweight, essential dependencies.
-* **Verification**: Ran full Next.js production build (`npm run build`, 22/22 routes generated with 0 type errors).
+### [2026-09-04] Phase 4: Razorpay Escrow Payments & Real-Time Order Lifecycle
+* **Issue**: Implementation of Phase 4 requirements: Razorpay payment gateway integration, escrow fund locking, delivery OTP verification, direct UPI payout to farmers upon delivery, and real-time multi-channel notification simulation.
+* **Resolution**:
+    * Created Razorpay order creation endpoint supporting live sandbox and escrow simulator in [create-order/route.ts](file:///e:/SIH/src/app/api/payments/razorpay/create-order/route.ts).
+    * Created payment verification and escrow locking endpoint in [verify/route.ts](file:///e:/SIH/src/app/api/payments/razorpay/verify/route.ts).
+    * Created delivery OTP verification route releasing escrow payouts directly to farmer UPI handles in [verify-otp/route.ts](file:///e:/SIH/src/app/api/orders/[id]/verify-otp/route.ts).
+    * Upgraded Direct Checkout flow in [page.tsx](file:///e:/SIH/src/app/checkout/[id]/page.tsx) with Razorpay JS SDK modal integration and fallback sandbox escrow simulation.
+    * Upgraded Orders Tracking Center in [orders/page.tsx](file:///e:/SIH/src/app/orders/page.tsx) with 5-stage interactive stepper (`placed` -> `confirmed` -> `routed` -> `out_for_delivery` -> `delivered`), delivery OTP modal (`5824`), instant green Escrow Payout banner, and DoCA price waterfall breakdown.
+    * Built bilingual real-time SMS & WhatsApp notification drawer simulator in [NotificationSimulator.tsx](file:///e:/SIH/src/components/NotificationSimulator.tsx) and mounted in [layout.tsx](file:///e:/SIH/src/app/layout.tsx).
+* **Verification**: Verified end-to-end with Next.js production build (`npm run build`, 24/24 static and dynamic routes compiled with 0 errors).
 

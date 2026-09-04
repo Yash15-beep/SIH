@@ -6,6 +6,8 @@ import { AuthProvider } from '@/lib/auth-context';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 
+import NotificationSimulator from '@/components/NotificationSimulator';
+
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const notoSans = Noto_Sans({ subsets: ['latin', 'devanagari'], variable: '--font-noto-sans', weight: ['400', '500', '600', '700'] });
 
@@ -36,6 +38,7 @@ export default function RootLayout({
             <main className="flex-grow">
               {children}
             </main>
+            <NotificationSimulator />
             <Footer />
           </AuthProvider>
         </I18nProvider>
