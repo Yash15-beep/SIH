@@ -109,18 +109,22 @@ export default function HomePage() {
 
   return (
     <div className="space-y-24 pb-28">
-      {/* Explicit Inline Marquee Style to guarantee 100% animation execution */}
+      {/* Explicit Inline Marquee Style with Edge Fade Masking */}
       <style>{`
         @keyframes continuousRatesMarquee {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
+        .rates-marquee-container {
+          mask-image: linear-gradient(to right, transparent 0%, black 24px, black calc(100% - 24px), transparent 100%);
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, black 24px, black calc(100% - 24px), transparent 100%);
+        }
         .rates-marquee-track {
           display: inline-flex;
           align-items: center;
-          gap: 1.5rem;
+          gap: 1.25rem;
           width: max-content;
-          animation: continuousRatesMarquee 28s linear infinite;
+          animation: continuousRatesMarquee 32s linear infinite;
           will-change: transform;
         }
         .rates-marquee-track:hover {
@@ -128,27 +132,29 @@ export default function HomePage() {
         }
       `}</style>
 
-      {/* 1. Continuous Sliding Window of Agmarknet Live Rates */}
-      <div className="bg-slate-950 text-slate-200 py-2 px-4 overflow-hidden border-b border-slate-800 shadow-inner">
+      {/* 1. Harmonious Sliding Window of Agmarknet Live Rates */}
+      <div className="bg-emerald-50/50 backdrop-blur-sm border-b border-emerald-100/90 py-2 px-4 shadow-xs">
         <div className="max-w-7xl mx-auto flex items-center gap-4 text-xs">
-          <div className="flex items-center gap-2 text-amber-400 font-extrabold shrink-0 bg-slate-900 py-1 px-3 rounded-full border border-amber-500/30 z-10">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span className="tracking-wide">LIVE AGMARKNET BENCHMARKS:</span>
+          {/* Static Live Badge with Solid Backdrop */}
+          <div className="flex items-center gap-2 text-emerald-950 font-bold shrink-0 bg-white py-1 px-3.5 rounded-full border border-emerald-200/80 shadow-xs z-10">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+            <span className="tracking-wide text-[11px]">LIVE AGMARKNET BENCHMARKS:</span>
           </div>
 
-          <div className="overflow-hidden whitespace-nowrap flex-1">
+          {/* Marquee Track with Soft Edge Fading */}
+          <div className="overflow-hidden whitespace-nowrap flex-1 rates-marquee-container">
             <div className="rates-marquee-track">
               {[...tickerItems, ...tickerItems, ...tickerItems].map((item, idx) => (
                 <div
                   key={idx}
-                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 hover:bg-slate-800 border border-slate-800 transition shrink-0 cursor-default"
+                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white hover:bg-emerald-50/80 border border-slate-200/90 shadow-xs transition shrink-0 cursor-default"
                 >
-                  <span className="font-bold text-white text-xs">{item.crop}</span>
+                  <span className="font-extrabold text-slate-900 text-xs">{item.crop}</span>
                   <span className="text-slate-400 text-[11px]">({item.mandi})</span>
-                  <span className="text-amber-300 font-extrabold text-xs">₹{item.price}/kg</span>
+                  <span className="text-emerald-700 font-black text-xs">₹{item.price}/kg</span>
                   <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded ${
-                    item.change.startsWith('+') ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-300'
+                    item.change.startsWith('+') ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
                   }`}>
                     {item.change}
                   </span>
