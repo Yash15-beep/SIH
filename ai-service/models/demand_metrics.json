@@ -1,0 +1,25 @@
+{
+  "price": {
+    "r2_score": 0.9982,
+    "r2_pct": 99.82,
+    "mae": 0.66,
+    "rmse": 0.95,
+    "mape_pct": 1.89
+  },
+  "arrivals": {
+    "r2_score": 0.9909,
+    "r2_pct": 99.09,
+    "mae": 20.43,
+    "rmse": 31.55,
+    "mape_pct": 5.55
+  },
+  "demand": {
+    "r2_score": 0.9834,
+    "r2_pct": 98.34,
+    "mae": 344.35,
+    "rmse": 459.52,
+    "mape_pct": 5.57
+  },
+  "overall_r2_pct": 99.82,
+  "overall_mape_pct": 1.89
+}
