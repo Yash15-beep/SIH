@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Truck, Sparkles, MapPin, CheckCircle2, ArrowRight, Play, ShieldCheck, Fuel, Leaf } from 'lucide-react';
+import { Truck, MapPin, Play, ShieldCheck, Fuel, Leaf } from 'lucide-react';
 import { RouteStop } from '@/types';
 
 export default function LogisticsPage() {
@@ -38,7 +38,6 @@ export default function LogisticsPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6">
         <div>
           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900 text-amber-400 text-xs font-bold mb-2">
@@ -69,7 +68,6 @@ export default function LogisticsPage() {
         </div>
       )}
 
-      {/* Metrics Banner */}
       {routeData && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="bg-slate-900 text-white p-6 rounded-3xl space-y-1 shadow-lg border border-slate-800">
@@ -114,9 +112,7 @@ export default function LogisticsPage() {
         </div>
       )}
 
-      {/* Sequenced Stops Timeline & Map Simulator */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Stops Sequence */}
         <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
           <div className="flex items-center justify-between border-b border-slate-100 pb-4">
             <h3 className="font-extrabold text-slate-900 text-lg">
@@ -172,7 +168,6 @@ export default function LogisticsPage() {
           </div>
         </div>
 
-        {/* Map Visualization Card */}
         <div className="lg:col-span-5 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4 flex flex-col justify-between">
           <div className="space-y-3">
             <h3 className="font-bold text-slate-900 text-base">Route Polyline & Geometry</h3>

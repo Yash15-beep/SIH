@@ -22,10 +22,7 @@ export async function GET() {
     const listing = listings.find(l => l.id === order.listing_id);
     const benchmarkMandi = listing?.mandi_benchmark_price || (order.total_price / order.quantity_kg);
     
-    // In traditional mandi, arhtiya cuts 8-12% commission, so farmer gets ~85% of modal
     estimatedMandiPayoutRs += (order.quantity_kg * benchmarkMandi * 0.86);
-    
-    // In traditional retail, consumers pay 1.6x - 2.0x of mandi rate
     estimatedRetailSpendRs += (order.quantity_kg * benchmarkMandi * 1.75);
   });
 
@@ -36,7 +33,6 @@ export async function GET() {
   const avgFarmerUpliftPct = estimatedMandiPayoutRs > 0 ? Math.round((totalFarmerUpliftRs / estimatedMandiPayoutRs) * 100) : 18;
   const avgConsumerDiscountPct = estimatedRetailSpendRs > 0 ? Math.round((totalConsumerSavingsRs / estimatedRetailSpendRs) * 100) : 28;
 
-  // Price waterfall comparative data for top crops
   const priceComparison = [
     {
       crop: 'Tomato (टमाटर)',

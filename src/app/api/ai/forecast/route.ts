@@ -9,25 +9,20 @@ export async function GET(req: NextRequest) {
   const history = db.getPriceCache(crop_name, region);
   const sorted = [...history].sort((a, b) => new Date(a.price_date).getTime() - new Date(b.price_date).getTime());
 
-  // If history is small, take whatever we have or fallback
   const lastRecord = sorted[sorted.length - 1] || { modal_price: 24, arrivals_qty: 180 };
   const basePrice = lastRecord.modal_price;
   const baseArrivals = lastRecord.arrivals_qty;
 
-  // Compute 7-day trend using simple moving average / linear regression logic
   const forecastDays = 7;
   const forecast = [];
   const now = new Date();
-
-  // Small trend factor based on recent days
-  const trendSlope = 0.35; // slight price rise
+  const trendSlope = 0.35;
 
   for (let i = 1; i <= forecastDays; i++) {
     const fDate = new Date(now.getTime() + i * 86400000);
     const dateStr = fDate.toISOString().split('T')[0];
     const dayName = fDate.toLocaleDateString('en-US', { weekday: 'short' });
     
-    // Projected price
     const predicted_price = Math.round((basePrice + (i * trendSlope) + Math.sin(i / 2) * 0.5) * 10) / 10;
     const predicted_arrivals = Math.round(baseArrivals - (i * 2.5) + (Math.cos(i) * 5));
 

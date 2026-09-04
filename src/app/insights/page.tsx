@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { useLanguage } from '@/lib/i18n';
-import { TrendingUp, Sparkles, AlertCircle, Info, Calendar } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
+import { Sparkles, Info } from 'lucide-react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import seedData from '@/data/agmarknet_seed_data.json';
 
 export default function InsightsPage() {
@@ -31,7 +31,6 @@ export default function InsightsPage() {
     fetchForecast();
   }, [selectedCrop, selectedRegion]);
 
-  // Combine historical and forecast for single continuous chart
   const chartPoints = forecastData ? [
     ...(forecastData.historical_points || []).map((p: any) => ({
       date: p.date.slice(5),
@@ -51,7 +50,6 @@ export default function InsightsPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-      {/* Header */}
       <div className="border-b border-slate-200 pb-6">
         <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-semibold mb-2">
           <Sparkles className="w-3.5 h-3.5 text-amber-700" />
@@ -65,7 +63,6 @@ export default function InsightsPage() {
         </p>
       </div>
 
-      {/* Selectors */}
       <div className="flex flex-wrap items-center gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
         <div className="flex items-center gap-2">
           <span className="text-xs font-bold text-slate-700 uppercase">Crop:</span>
@@ -98,7 +95,6 @@ export default function InsightsPage() {
         </div>
       </div>
 
-      {/* AI Summary Banner */}
       {forecastData && (
         <div className="bg-gradient-to-r from-brand-900 via-brand-800 to-slate-900 text-white p-6 rounded-3xl shadow-lg space-y-2">
           <div className="flex items-center gap-2 text-xs font-bold text-amber-300">
@@ -115,7 +111,6 @@ export default function InsightsPage() {
         </div>
       )}
 
-      {/* Interactive Price & Forecast Chart */}
       <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
           <div>
@@ -173,7 +168,6 @@ export default function InsightsPage() {
         )}
       </div>
 
-      {/* 7-Day Day-by-Day Forecast Breakdown */}
       {forecastData?.forecast && (
         <div className="space-y-4">
           <h3 className="text-lg font-bold text-slate-900">7-Day Day-by-Day Projections</h3>

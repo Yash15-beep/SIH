@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
       total_price,
       payment_status: 'test_paid',
       delivery_status: 'confirmed',
-      delivery_address: delivery_address || buyer?.village || 'Standard Address',
+      delivery_address: deliveryAddressFormatted(delivery_address, buyer?.village),
     });
 
     return NextResponse.json({
@@ -51,4 +51,8 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     return NextResponse.json({ error: { message: 'Failed to create order' } }, { status: 500 });
   }
+}
+
+function deliveryAddressFormatted(address?: string, village?: string) {
+  return address || village || 'Standard Address';
 }

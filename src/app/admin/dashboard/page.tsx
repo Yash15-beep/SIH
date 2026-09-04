@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useLanguage } from '@/lib/i18n';
-import { ShieldCheck, TrendingUp, Sparkles, Users, ShoppingBag, ArrowUpRight, BarChart3, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, BarChart3 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
 export default function AdminDashboard() {
@@ -44,7 +44,6 @@ export default function AdminDashboard() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6">
         <div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold mb-2">
@@ -65,7 +64,6 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* 4 Key Performance Indicator Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-slate-900 text-white p-6 rounded-3xl shadow-xl space-y-2 border border-slate-800">
           <div className="text-xs uppercase tracking-wider font-semibold text-amber-400">
@@ -108,7 +106,6 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Main Feature: Price Formation Waterfall Comparison Chart */}
       <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
           <div>
@@ -141,9 +138,7 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Middleman Layer Leakage Breakdown */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Traditional Supply Chain */}
         <div className="bg-rose-50/50 border border-rose-200 rounded-3xl p-6 space-y-4">
           <div className="flex items-center justify-between">
             <h4 className="font-extrabold text-rose-950 text-base">
@@ -174,7 +169,6 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* KisanSetu Disintermediated Model */}
         <div className="bg-emerald-50/70 border-2 border-emerald-500 rounded-3xl p-6 space-y-4 shadow-sm">
           <div className="flex items-center justify-between">
             <h4 className="font-extrabold text-emerald-950 text-base">

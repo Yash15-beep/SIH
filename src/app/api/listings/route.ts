@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
       price_per_kg: Number(price_per_kg || (benchmark ? benchmark.modal_price - 1 : 20)),
       ai_suggested_price: benchmark ? benchmark.modal_price - 1 : undefined,
       mandi_benchmark_price: benchmark ? benchmark.modal_price : undefined,
-      harvest_date: harvest_date || new Date().toISOString().split('T')[0],
+      harvest_date: harvestDateFormatted(harvest_date),
       image_url: image_url || undefined,
     });
 
@@ -43,4 +43,8 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     return NextResponse.json({ error: { message: 'Failed to create listing' } }, { status: 500 });
   }
+}
+
+function harvestDateFormatted(date?: string) {
+  return date || new Date().toISOString().split('T')[0];
 }

@@ -2,9 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { RouteStop } from '@/types';
 
-// Helper for Haversine distance in KM
 function haversineKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
-  const R = 6371; // Earth's radius in km
+  const R = 6371;
   const dLat = (lat2 - lat1) * (Math.PI / 180);
   const dLon = (lon2 - lon1) * (Math.PI / 180);
   const a =
@@ -24,14 +23,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: { message: 'No active orders available to route' } }, { status: 400 });
     }
 
-    // Build raw stops: Pickup at farmer, Drop at consumer/buyer
     const stops: RouteStop[] = [];
 
     activeOrders.slice(0, 4).forEach((order, idx) => {
       const farmer = db.getUserById(order.farmer_id || '');
       const buyer = db.getUserById(order.buyer_id || '');
 
-      // Farmer Pickup Stop
       stops.push({
         order_id: order.id,
         type: 'pickup',
@@ -44,7 +41,6 @@ export async function POST(req: NextRequest) {
         eta: `08:${(30 + idx * 25).toString().padStart(2, '0')} AM`
       });
 
-      // Buyer Drop Stop
       stops.push({
         order_id: order.id,
         type: 'drop',
@@ -58,12 +54,10 @@ export async function POST(req: NextRequest) {
       });
     });
 
-    // Solve sequence: Pickups first clustered, then Drops clustered (2-opt heuristic)
     const pickups = stops.filter(s => s.type === 'pickup');
     const drops = stops.filter(s => s.type === 'drop');
     const orderedStops = [...pickups, ...drops];
 
-    // Compute optimized distance
     let optimizedDistance = 0;
     for (let i = 0; i < orderedStops.length - 1; i++) {
       optimizedDistance += haversineKm(
@@ -71,12 +65,11 @@ export async function POST(req: NextRequest) {
         orderedStops[i + 1].lat, orderedStops[i + 1].lng
       );
     }
-    // Road factor adjustment (roads are ~1.28x straight line)
     const totalRoadKm = Math.round(optimizedDistance * 1.28 * 10) / 10;
     const naiveSequentialKm = Math.round(totalRoadKm * 1.32 * 10) / 10;
     const distanceSavedKm = Math.round((naiveSequentialKm - totalRoadKm) * 10) / 10;
     const savingsPct = Math.round((distanceSavedKm / naiveSequentialKm) * 100);
-    const totalTimeMin = Math.round(totalRoadKm * 2.2); // ~27 km/h avg tempo
+    const totalTimeMin = Math.round(totalRoadKm * 2.2);
 
     const route = db.createRoute({
       stop_sequence: orderedStops,
@@ -86,7 +79,6 @@ export async function POST(req: NextRequest) {
       savings_pct: savingsPct
     });
 
-    // update orders to 'routed'
     activeOrders.slice(0, 4).forEach(o => {
       db.updateOrderStatus(o.id, 'routed');
     });

@@ -11,7 +11,7 @@
       "lat": 28.2055,
       "lng": 76.7944,
       "preferred_language": "hi",
-      "created_at": "2026-08-05T08:04:36.895Z"
+      "created_at": "2026-08-05T08:45:42.642Z"
     },
     {
       "id": "usr_farmer_suresh",
@@ -24,7 +24,7 @@
       "lat": 29.802,
       "lng": 76.929,
       "preferred_language": "hi",
-      "created_at": "2026-08-10T08:04:36.896Z"
+      "created_at": "2026-08-10T08:45:42.643Z"
     },
     {
       "id": "usr_farmer_baljit",
@@ -37,7 +37,7 @@
       "lat": 28.7758,
       "lng": 76.7725,
       "preferred_language": "hi",
-      "created_at": "2026-08-15T08:04:36.896Z"
+      "created_at": "2026-08-15T08:45:42.643Z"
     },
     {
       "id": "usr_consumer_priya",
@@ -50,7 +50,7 @@
       "lat": 28.432,
       "lng": 77.1025,
       "preferred_language": "en",
-      "created_at": "2026-08-20T08:04:36.896Z"
+      "created_at": "2026-08-20T08:45:42.643Z"
     },
     {
       "id": "usr_consumer_ankit",
@@ -63,7 +63,7 @@
       "lat": 28.5921,
       "lng": 77.046,
       "preferred_language": "en",
-      "created_at": "2026-08-25T08:04:36.896Z"
+      "created_at": "2026-08-25T08:45:42.643Z"
     },
     {
       "id": "usr_bulk_sanjay",
@@ -76,7 +76,7 @@
       "lat": 28.6304,
       "lng": 77.2177,
       "preferred_language": "en",
-      "created_at": "2026-08-07T08:04:36.896Z"
+      "created_at": "2026-08-07T08:45:42.643Z"
     },
     {
       "id": "usr_admin_doca",
@@ -89,7 +89,7 @@
       "lat": 28.62,
       "lng": 77.21,
       "preferred_language": "en",
-      "created_at": "2026-07-06T08:04:36.896Z"
+      "created_at": "2026-07-06T08:45:42.643Z"
     }
   ],
   "listings": [
@@ -108,7 +108,7 @@
       "mandi_benchmark_price": 24,
       "harvest_date": "2026-09-03",
       "status": "active",
-      "created_at": "2026-09-03T08:04:36.904Z",
+      "created_at": "2026-09-03T08:45:42.647Z",
       "image_url": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=500&auto=format&fit=crop&q=80"
     },
     {
@@ -126,7 +126,7 @@
       "mandi_benchmark_price": 28,
       "harvest_date": "2026-09-01",
       "status": "active",
-      "created_at": "2026-09-01T08:04:36.904Z",
+      "created_at": "2026-09-01T08:45:42.647Z",
       "image_url": "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=500&auto=format&fit=crop&q=80"
     },
     {
@@ -144,7 +144,7 @@
       "mandi_benchmark_price": 18,
       "harvest_date": "2026-09-02",
       "status": "active",
-      "created_at": "2026-09-02T08:04:36.904Z",
+      "created_at": "2026-09-02T08:45:42.647Z",
       "image_url": "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&auto=format&fit=crop&q=80"
     },
     {
@@ -162,7 +162,7 @@
       "mandi_benchmark_price": 55,
       "harvest_date": "2026-08-31",
       "status": "active",
-      "created_at": "2026-08-31T08:04:36.904Z",
+      "created_at": "2026-08-31T08:45:42.647Z",
       "image_url": "https://images.unsplash.com/photo-1508747703725-719777637510?w=500&auto=format&fit=crop&q=80"
     },
     {
@@ -180,7 +180,7 @@
       "mandi_benchmark_price": 26,
       "harvest_date": "2026-08-30",
       "status": "active",
-      "created_at": "2026-08-30T08:04:36.904Z",
+      "created_at": "2026-08-30T08:45:42.647Z",
       "image_url": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&auto=format&fit=crop&q=80"
     },
     {
@@ -198,7 +198,7 @@
       "mandi_benchmark_price": 22,
       "harvest_date": "2026-09-03",
       "status": "active",
-      "created_at": "2026-09-03T08:04:36.904Z",
+      "created_at": "2026-09-03T08:45:42.647Z",
       "image_url": "https://images.unsplash.com/photo-1568584711075-3d021a7c3ca3?w=500&auto=format&fit=crop&q=80"
     }
   ],
@@ -215,9 +215,9 @@
       "quantity_kg": 10,
       "total_price": 220,
       "payment_status": "test_paid",
-      "delivery_status": "routed",
+      "delivery_status": "out_for_delivery",
       "delivery_address": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
-      "created_at": "2026-09-04T04:04:36.904Z"
+      "created_at": "2026-09-04T04:45:42.648Z"
     },
     {
       "id": "ord_demo_02",
@@ -231,9 +231,9 @@
       "quantity_kg": 25,
       "total_price": 650,
       "payment_status": "test_paid",
-      "delivery_status": "routed",
+      "delivery_status": "confirmed",
       "delivery_address": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
-      "created_at": "2026-09-04T00:04:36.904Z"
+      "created_at": "2026-09-04T00:45:42.648Z"
     },
     {
       "id": "ord_demo_03",
@@ -249,7 +249,7 @@
       "payment_status": "test_paid",
       "delivery_status": "routed",
       "delivery_address": "Grand Imperial Hotel Kitchen Sourcing Dock, CP, New Delhi",
-      "created_at": "2026-09-03T18:04:36.904Z"
+      "created_at": "2026-09-03T18:45:42.648Z"
     }
   ],
   "demand_posts": [
@@ -261,239 +261,10 @@
       "quantity_kg": 350,
       "frequency": "weekly",
       "delivery_address": "Central Kitchen Loading Dock 2, Connaught Place, New Delhi",
-      "created_at": "2026-09-02T08:04:36.904Z"
+      "created_at": "2026-09-02T08:45:42.648Z"
     }
   ],
-  "routes": [
-    {
-      "stop_sequence": [
-        {
-          "order_id": "ord_demo_01",
-          "type": "pickup",
-          "name": "Pickup: Ramesh Kumar",
-          "location_name": "Dharuhera, Rewari",
-          "lat": 28.2055,
-          "lng": 76.7944,
-          "crop_name": "Tomato",
-          "quantity_kg": 10,
-          "eta": "08:30 AM"
-        },
-        {
-          "order_id": "ord_demo_02",
-          "type": "pickup",
-          "name": "Pickup: Ramesh Kumar",
-          "location_name": "Dharuhera, Rewari",
-          "lat": 28.2055,
-          "lng": 76.7944,
-          "crop_name": "Onion",
-          "quantity_kg": 25,
-          "eta": "08:55 AM"
-        },
-        {
-          "order_id": "ord_demo_03",
-          "type": "pickup",
-          "name": "Pickup: Suresh Yadav",
-          "location_name": "Taraori, Karnal",
-          "lat": 29.802,
-          "lng": 76.929,
-          "crop_name": "Potato",
-          "quantity_kg": 400,
-          "eta": "08:80 AM"
-        },
-        {
-          "order_id": "ord_demo_01",
-          "type": "drop",
-          "name": "Delivery: Priya Sharma",
-          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
-          "lat": 28.432,
-          "lng": 77.1025,
-          "crop_name": "Tomato",
-          "quantity_kg": 10,
-          "eta": "10:15 AM"
-        },
-        {
-          "order_id": "ord_demo_02",
-          "type": "drop",
-          "name": "Delivery: Ankit Verma",
-          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
-          "lat": 28.5921,
-          "lng": 77.046,
-          "crop_name": "Onion",
-          "quantity_kg": 25,
-          "eta": "10:45 AM"
-        },
-        {
-          "order_id": "ord_demo_03",
-          "type": "drop",
-          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
-          "location_name": "Grand Imperial Hotel Kitchen Sourcing Dock, CP, New Delhi",
-          "lat": 28.6304,
-          "lng": 77.2177,
-          "crop_name": "Potato",
-          "quantity_kg": 400,
-          "eta": "10:75 AM"
-        }
-      ],
-      "total_distance_km": 470,
-      "total_time_min": 1034,
-      "distance_saved_km": 150.4,
-      "savings_pct": 24,
-      "id": "rt_1788510268294",
-      "created_at": "2026-09-04T08:24:28.294Z"
-    },
-    {
-      "stop_sequence": [
-        {
-          "order_id": "ord_demo_01",
-          "type": "pickup",
-          "name": "Pickup: Ramesh Kumar",
-          "location_name": "Dharuhera, Rewari",
-          "lat": 28.2055,
-          "lng": 76.7944,
-          "crop_name": "Tomato",
-          "quantity_kg": 10,
-          "eta": "08:30 AM"
-        },
-        {
-          "order_id": "ord_demo_02",
-          "type": "pickup",
-          "name": "Pickup: Ramesh Kumar",
-          "location_name": "Dharuhera, Rewari",
-          "lat": 28.2055,
-          "lng": 76.7944,
-          "crop_name": "Onion",
-          "quantity_kg": 25,
-          "eta": "08:55 AM"
-        },
-        {
-          "order_id": "ord_demo_03",
-          "type": "pickup",
-          "name": "Pickup: Suresh Yadav",
-          "location_name": "Taraori, Karnal",
-          "lat": 29.802,
-          "lng": 76.929,
-          "crop_name": "Potato",
-          "quantity_kg": 400,
-          "eta": "08:80 AM"
-        },
-        {
-          "order_id": "ord_demo_01",
-          "type": "drop",
-          "name": "Delivery: Priya Sharma",
-          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
-          "lat": 28.432,
-          "lng": 77.1025,
-          "crop_name": "Tomato",
-          "quantity_kg": 10,
-          "eta": "10:15 AM"
-        },
-        {
-          "order_id": "ord_demo_02",
-          "type": "drop",
-          "name": "Delivery: Ankit Verma",
-          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
-          "lat": 28.5921,
-          "lng": 77.046,
-          "crop_name": "Onion",
-          "quantity_kg": 25,
-          "eta": "10:45 AM"
-        },
-        {
-          "order_id": "ord_demo_03",
-          "type": "drop",
-          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
-          "location_name": "Grand Imperial Hotel Kitchen Sourcing Dock, CP, New Delhi",
-          "lat": 28.6304,
-          "lng": 77.2177,
-          "crop_name": "Potato",
-          "quantity_kg": 400,
-          "eta": "10:75 AM"
-        }
-      ],
-      "total_distance_km": 470,
-      "total_time_min": 1034,
-      "distance_saved_km": 150.4,
-      "savings_pct": 24,
-      "id": "rt_1788509964445",
-      "created_at": "2026-09-04T08:19:24.445Z"
-    },
-    {
-      "stop_sequence": [
-        {
-          "order_id": "ord_demo_01",
-          "type": "pickup",
-          "name": "Pickup: Ramesh Kumar",
-          "location_name": "Dharuhera, Rewari",
-          "lat": 28.2055,
-          "lng": 76.7944,
-          "crop_name": "Tomato",
-          "quantity_kg": 10,
-          "eta": "08:30 AM"
-        },
-        {
-          "order_id": "ord_demo_02",
-          "type": "pickup",
-          "name": "Pickup: Ramesh Kumar",
-          "location_name": "Dharuhera, Rewari",
-          "lat": 28.2055,
-          "lng": 76.7944,
-          "crop_name": "Onion",
-          "quantity_kg": 25,
-          "eta": "08:55 AM"
-        },
-        {
-          "order_id": "ord_demo_03",
-          "type": "pickup",
-          "name": "Pickup: Suresh Yadav",
-          "location_name": "Taraori, Karnal",
-          "lat": 29.802,
-          "lng": 76.929,
-          "crop_name": "Potato",
-          "quantity_kg": 400,
-          "eta": "08:80 AM"
-        },
-        {
-          "order_id": "ord_demo_01",
-          "type": "drop",
-          "name": "Delivery: Priya Sharma",
-          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
-          "lat": 28.432,
-          "lng": 77.1025,
-          "crop_name": "Tomato",
-          "quantity_kg": 10,
-          "eta": "10:15 AM"
-        },
-        {
-          "order_id": "ord_demo_02",
-          "type": "drop",
-          "name": "Delivery: Ankit Verma",
-          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
-          "lat": 28.5921,
-          "lng": 77.046,
-          "crop_name": "Onion",
-          "quantity_kg": 25,
-          "eta": "10:45 AM"
-        },
-        {
-          "order_id": "ord_demo_03",
-          "type": "drop",
-          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
-          "location_name": "Grand Imperial Hotel Kitchen Sourcing Dock, CP, New Delhi",
-          "lat": 28.6304,
-          "lng": 77.2177,
-          "crop_name": "Potato",
-          "quantity_kg": 400,
-          "eta": "10:75 AM"
-        }
-      ],
-      "total_distance_km": 470,
-      "total_time_min": 1034,
-      "distance_saved_km": 150.4,
-      "savings_pct": 24,
-      "id": "rt_1788509874616",
-      "created_at": "2026-09-04T08:17:54.616Z"
-    }
-  ],
+  "routes": [],
   "price_cache": [
     {
       "id": "pc_tomato_rewarimandi_2026-08-05",

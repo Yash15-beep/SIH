@@ -23,7 +23,6 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  // AI suggestion formula: slightly below mandi modal (competitive direct price) or farm-gate uplift
   const suggested_price = Math.round(benchmark.modal_price * 0.95 * 10) / 10;
 
   return NextResponse.json({
