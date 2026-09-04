@@ -16,7 +16,6 @@ from agmarknet_client import agmarknet_client
 from price_model import price_model
 from forecasting_model import forecast_model
 from vrp_optimizer import vrp_optimizer
-from vision_classifier import vision_classifier
 
 app = FastAPI(
     title="KisanSetu AI Microservice",
@@ -134,21 +133,6 @@ def optimize_route_legacy(request: Dict[str, Any] = Body(...)):
     destination = stops[-1] if len(stops) > 1 else {"name": "Central Hub", "lat": 28.6304, "lng": 77.2177}
     result = vrp_optimizer.optimize_route(pickups=pickups, destination=destination)
     return {"data": result}
-
-class VisionScanRequest(BaseModel):
-    crop: str = Field("Tomato", example="Tomato")
-    image_data: Optional[str] = Field(None, description="Base64 or image URL")
-    harvest_date: Optional[str] = Field(None, example="2026-09-04")
-
-# 5. Computer Vision Produce Freshness Scanner (Grade A/B/C)
-@app.post("/api/v1/vision/scan-freshness")
-def scan_produce_freshness(req: VisionScanRequest):
-    result = vision_classifier.scan_produce(
-        crop_name=req.crop,
-        image_data=req.image_data,
-        harvest_date=req.harvest_date
-    )
-    return {"status": "success", "data": result}
 
 if __name__ == "__main__":
     import uvicorn

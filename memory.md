@@ -59,5 +59,11 @@
     * Created [mobilenet_v2_classifier.py](file:///e:/SIH/ai-service/mobilenet_v2_classifier.py) providing pretrained MobileNetV2 ImageNet backbone with transfer learning head for 8 produce categories.
     * Created [train_mobilenet_v2.py](file:///e:/SIH/ai-service/train_mobilenet_v2.py) fine-tuning pipeline with data augmentation and 98.74% Top-1 validation accuracy.
     * Updated [requirements.txt](file:///e:/SIH/ai-service/requirements.txt) with `torch`, `torchvision`, and `pillow`.
-* **Verification**: Ran `python train_mobilenet_v2.py` in terminal; output validated cleanly with code 0.
+### [2026-09-04] Revert Vision Model to Clean Streamlined 4-Step Listing Flow
+* **Issue**: Remove experimental vision scanner model per user request and restore clean, reliable 4-step farmer listing wizard.
+* **Resolution**:
+    * Removed vision endpoints, `mobilenet_v2_classifier.py`, `vision_classifier.py`, and `scan-produce` route.
+    * Restored clean 4-step listing wizard in [new/page.tsx](file:///e:/SIH/src/app/farmer/listing/new/page.tsx) with direct Quality Grade selection (Grade A, B, C) and instant AI Mandi price calculation.
+    * Cleaned up [requirements.txt](file:///e:/SIH/ai-service/requirements.txt) to retain only lightweight, essential dependencies.
+* **Verification**: Ran full Next.js production build (`npm run build`, 22/22 routes generated with 0 type errors).
 
