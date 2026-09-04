@@ -1,0 +1,198 @@
+// KisanSetu Database Schema (PostgreSQL via Supabase & Prisma ORM)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  FARMER
+  CONSUMER
+  BULK_BUYER
+  LOGISTICS
+  DOCA
+}
+
+enum OrderStatus {
+  PLACED
+  POOLED
+  PICKED_UP
+  IN_TRANSIT
+  DELIVERED
+  CANCELLED
+}
+
+enum ListingStatus {
+  ACTIVE
+  SOLD_OUT
+  RESERVED
+  EXPIRED
+}
+
+enum DemandStatus {
+  OPEN
+  MATCHED
+  FULFILLED
+  CLOSED
+}
+
+model User {
+  id              String           @id @default(uuid())
+  phone           String           @unique
+  name            String
+  role            Role             @default(FARMER)
+  email           String?          @unique
+  location        String
+  lat             Float            @default(28.6139)
+  lng             Float            @default(77.2090)
+  kisanId         String?
+  rating          Float            @default(4.8)
+  verified        Boolean          @default(false)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  // Relationships
+  listings        ProduceListing[]
+  ordersAsBuyer   Order[]          @relation("BuyerOrders")
+  demandPosts     DemandPost[]
+  logisticsRoutes LogisticsRoute[]
+
+  @@map("users")
+}
+
+model ProduceListing {
+  id                    String        @id @default(uuid())
+  farmerId              String
+  crop                  String
+  cropHi                String?
+  variety               String?
+  quantityKg            Float
+  minOrderKg            Float         @default(1)
+  pricePerKg            Float
+  mandiReferencePrice   Float
+  estimatedRetailPrice  Float
+  qualityGrade          String        @default("Grade A")
+  harvestDate           String
+  location              String
+  lat                   Float         @default(28.6139)
+  lng                   Float         @default(77.2090)
+  imageUrl              String?
+  description           String?
+  status                ListingStatus @default(ACTIVE)
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+
+  // Relationships
+  farmer                User          @relation(fields: [farmerId], references: [id], onDelete: Cascade)
+  orders                Order[]
+
+  @@index([crop])
+  @@index([farmerId])
+  @@index([status])
+  @@map("produce_listings")
+}
+
+model Order {
+  id              String      @id @default(uuid())
+  buyerId         String
+  buyerName       String
+  buyerPhone      String
+  buyerAddress    String
+  listingId       String
+  crop            String
+  quantityKg      Float
+  pricePerKg      Float
+  totalAmount     Float
+  platformFee     Float       @default(0)
+  logisticsFee    Float       @default(0)
+  farmerPayout    Float
+  status          OrderStatus @default(PLACED)
+  paymentMethod   String      @default("UPI")
+  paymentId       String?
+  deliveryOtp     String?
+  pickupDate      String?
+  deliveryDate    String?
+  notes           String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  // Relationships
+  buyer           User           @relation("BuyerOrders", fields: [buyerId], references: [id])
+  listing         ProduceListing @relation(fields: [listingId], references: [id])
+  routeId         String?
+  route           LogisticsRoute? @relation(fields: [routeId], references: [id])
+
+  @@index([buyerId])
+  @@index([listingId])
+  @@index([status])
+  @@map("orders")
+}
+
+model DemandPost {
+  id                 String       @id @default(uuid())
+  buyerId            String
+  buyerName          String
+  buyerOrg           String
+  crop               String
+  targetQuantityKg   Float
+  maxPricePerKg      Float
+  targetDeliveryDate String
+  deliveryLocation   String
+  status             DemandStatus @default(OPEN)
+  matchedFarmerCount Int          @default(0)
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+
+  // Relationships
+  buyer              User         @relation(fields: [buyerId], references: [id])
+
+  @@index([buyerId])
+  @@index([crop])
+  @@map("demand_posts")
+}
+
+model PriceBenchmark {
+  id           String   @id @default(uuid())
+  commodity    String
+  market       String
+  state        String
+  minPrice     Float
+  maxPrice     Float
+  modalPrice   Float
+  recordedDate String
+  createdAt    DateTime @default(now())
+
+  @@index([commodity])
+  @@index([state])
+  @@index([recordedDate])
+  @@map("price_benchmarks")
+}
+
+model LogisticsRoute {
+  id               String   @id @default(uuid())
+  driverId         String
+  driverName       String
+  vehicleNumber    String
+  origin           String
+  destination      String
+  waypoints        String   // JSON string of waypoints
+  totalDistanceKm  Float
+  totalLoadKg      Float
+  fuelSavedLiters  Float
+  status           String   @default("SCHEDULED")
+  startedAt        DateTime?
+  completedAt      DateTime?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Relationships
+  driver           User     @relation(fields: [driverId], references: [id])
+  orders           Order[]
+
+  @@map("logistics_routes")
+}

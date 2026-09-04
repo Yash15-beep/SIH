@@ -24,5 +24,13 @@
     * Created [.env.example](file:///e:/SIH/.env.example) with environment variable templates.
     * Created [README.md](file:///e:/SIH/README.md) with comprehensive clone, installation, database seeding, and script running instructions.
     * Created Python dependencies configuration in [requirements.txt](file:///e:/SIH/ai-service/requirements.txt).
-* **Verification**: Verified npm dependencies, seed script (`npm run seed`), and build output (`npm run build`).
+### [2026-09-04] Phase 2: Supabase & Prisma ORM Relational Backend Architecture
+* **Issue**: Upgrade the platform from an in-memory mock engine to a production-grade PostgreSQL relational database schema with Prisma ORM and Supabase client integration.
+* **Resolution**:
+    * Created [schema.prisma](file:///e:/SIH/prisma/schema.prisma) with complete relational entities (`User`, `ProduceListing`, `Order`, `DemandPost`, `PriceBenchmark`, `LogisticsRoute`).
+    * Created singleton Prisma database client in [prisma.ts](file:///e:/SIH/src/lib/prisma.ts).
+    * Created Supabase Auth & Storage client helpers in [supabase.ts](file:///e:/SIH/src/lib/supabase.ts).
+    * Created PostgreSQL seed script in [seed-prisma.ts](file:///e:/SIH/scripts/seed-prisma.ts) with npm scripts `npm run seed:prisma`, `npm run prisma:generate`, and `npm run prisma:push`.
+    * Updated [.env.example](file:///e:/SIH/.env.example) with Supabase connection strings and credentials.
+* **Verification**: Generated Prisma client with `npx prisma generate` and verified full TypeScript build with `npm run build` (20/20 routes generated, 0 type errors).
 
