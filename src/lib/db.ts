@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { User, Listing, Order, DemandPost, Route, PriceCacheRecord } from '@/types';
+import { User, Listing, Order, DemandPost, Route, PriceCacheRecord, VisionVerification } from '@/types';
 import seedData from '@/data/agmarknet_seed_data.json';
 
 interface DatabaseSchema {
@@ -493,6 +493,15 @@ class ResilientDatabase {
     }
     this.save(this.data);
     return this.data.orders[idx];
+  }
+
+  public updateOrderVerification(id: string, stage: 'dispatch' | 'receipt', verification: VisionVerification): Order | undefined {
+    const order = this.data.orders.find(o => o.id === id);
+    if (!order) return undefined;
+    if (stage === 'dispatch') order.dispatch_verification = verification;
+    else order.receipt_verification = verification;
+    this.save(this.data);
+    return order;
   }
 
   // Demand Posts

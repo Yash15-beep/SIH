@@ -1,22 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { scanWithFreshVision, verifyExpectedCrop } from '@/lib/fresh-vision';
 
 export async function POST(request: NextRequest) {
   const formData = await request.formData();
   const file = formData.get('file');
+  const expectedCrop = formData.get('expected_crop');
   if (!(file instanceof File)) {
     return NextResponse.json({ message: 'Please choose a produce photo.' }, { status: 400 });
   }
 
   try {
-    const upstream = new FormData();
-    upstream.append('file', file, file.name);
-    const aiServiceUrl = process.env.NEXT_PUBLIC_AI_SERVICE_URL || 'http://localhost:8000';
-    const response = await fetch(`${aiServiceUrl}/api/v1/vision/scan`, { method: 'POST', body: upstream });
-    const data = await response.json();
-    return NextResponse.json(data, { status: response.status });
-  } catch {
+    const result = await scanWithFreshVision(file);
+    return NextResponse.json(typeof expectedCrop === 'string' ? verifyExpectedCrop(result, expectedCrop) : result);
+  } catch (error) {
     return NextResponse.json(
-      { message: 'Fresh Vision is unavailable. Start the AI service and try again.' },
+      { message: error instanceof Error ? error.message : 'Fresh Vision is unavailable. Start the AI service and try again.' },
       { status: 503 }
     );
   }

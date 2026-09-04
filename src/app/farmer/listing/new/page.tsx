@@ -22,7 +22,7 @@ export default function NewListingPage() {
   const [loading, setLoading] = useState(false);
   const [publishedId, setPublishedId] = useState<string | null>(null);
   const [scanLoading, setScanLoading] = useState(false);
-  const [scanResult, setScanResult] = useState<{ freshness: string; freshness_confidence: number; shelf_life: string; image_url: string } | null>(null);
+  const [scanResult, setScanResult] = useState<{ freshness: string; freshness_key: string; freshness_confidence: number; shelf_life: string; image_url: string } | null>(null);
   const [scanMessage, setScanMessage] = useState<string | null>(null);
 
   const [aiPriceData, setAiPriceData] = useState<{
@@ -64,6 +64,7 @@ export default function NewListingPage() {
     setScanMessage(null);
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('expected_crop', selectedCrop);
     try {
       const response = await fetch('/api/ai/scan-produce', { method: 'POST', body: formData });
       const result = await response.json();
@@ -76,6 +77,7 @@ export default function NewListingPage() {
       setQualityGrade(result.quality_grade);
       setScanResult({
         freshness: result.freshness,
+        freshness_key: result.freshness_key,
         freshness_confidence: result.freshness_confidence,
         shelf_life: result.shelf_life,
         image_url: URL.createObjectURL(file)
@@ -88,6 +90,11 @@ export default function NewListingPage() {
   };
 
   const handlePublish = async () => {
+    if (!scanResult) {
+      setStep(1);
+      setScanMessage('Scan the selected produce with Fresh Vision before publishing its marketplace listing.');
+      return;
+    }
     setLoading(true);
     try {
       const selectedObj = seedData.crops.find((c) => c.name === selectedCrop);
@@ -105,6 +112,7 @@ export default function NewListingPage() {
           // crop image rather than persisting a browser-only blob URL.
           image_url: selectedObj?.image,
           freshness: scanResult?.freshness,
+          freshness_key: scanResult?.freshness_key,
           freshness_confidence: scanResult?.freshness_confidence,
           shelf_life: scanResult?.shelf_life
         })
@@ -157,9 +165,7 @@ export default function NewListingPage() {
               <h2 className="text-2xl font-extrabold text-slate-900">
                 {language === 'hi' ? 'फसल चुनें (Select Crop)' : 'Select Your Produce'}
               </h2>
-              <p className="text-xs text-slate-500">
-                Choose the commodity you are listing from your harvest.
-              </p>
+              <p className="text-xs text-slate-500">Choose the commodity, then scan a photo. Fresh Vision must confirm the selected crop before it can be listed.</p>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -169,7 +175,11 @@ export default function NewListingPage() {
                   <button
                     key={crop.name}
                     type="button"
-                    onClick={() => setSelectedCrop(crop.name)}
+                    onClick={() => {
+                      setSelectedCrop(crop.name);
+                      setScanResult(null);
+                      setScanMessage(null);
+                    }}
                     className={`p-4 rounded-2xl border-2 text-left flex flex-col items-center text-center gap-3 transition ${
                       isSelected
                         ? 'border-brand-600 bg-brand-50/80 shadow-md ring-2 ring-brand-600/20'
@@ -197,7 +207,7 @@ export default function NewListingPage() {
               </label>
               {scanLoading && <p className="mt-3 flex items-center gap-2 text-xs text-brand-800"><Loader2 className="h-4 w-4 animate-spin" /> Fresh Vision is checking freshness…</p>}
               {scanMessage && <p className="mt-3 flex items-center gap-2 text-xs text-rose-700"><AlertCircle className="h-4 w-4" /> {scanMessage}</p>}
-              {scanResult && <div className="mt-3 flex items-center gap-3 rounded-xl bg-white p-3 text-xs"><img src={scanResult.image_url} alt="Scanned produce" className="h-12 w-12 rounded-lg object-cover" /><span><strong className="text-emerald-700">{scanResult.freshness}</strong> · {scanResult.freshness_confidence}% confidence<br />Estimated shelf life: {scanResult.shelf_life}. Quality grade updated automatically.</span></div>}
+              {scanResult && <div className="mt-3 flex items-center gap-3 rounded-xl bg-white p-3 text-xs"><img src={scanResult.image_url} alt="Scanned produce" className="h-12 w-12 rounded-lg object-cover" /><span><strong className="text-emerald-700">{scanResult.freshness}</strong> · {scanResult.freshness_confidence}% confidence<br />Crop identity verified as {selectedCrop}. Estimated shelf life: {scanResult.shelf_life}; quality grade and price have been updated.</span></div>}
             </div>
 
             <button

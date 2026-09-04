@@ -34,8 +34,22 @@ export interface Listing {
   created_at: string;
   image_url?: string;
   freshness?: string;
+  freshness_key?: string;
   freshness_confidence?: number;
   shelf_life?: string;
+  freshness_scanned_at?: string;
+}
+
+export interface VisionVerification {
+  status: 'verified' | 'mismatch' | 'pending';
+  checked_at: string;
+  expected_crop: string;
+  detected_crop?: string;
+  freshness?: string;
+  freshness_key?: string;
+  crop_match: boolean;
+  freshness_match: boolean;
+  detail: string;
 }
 
 export type DemandFrequency = 'one_time' | 'weekly' | 'biweekly' | 'monthly';
@@ -71,6 +85,10 @@ export interface Order {
   farmer_village?: string;
   farmer_id?: string;
   created_at: string;
+  listed_freshness?: string;
+  listed_freshness_key?: string;
+  dispatch_verification?: VisionVerification;
+  receipt_verification?: VisionVerification;
 }
 
 export interface RouteStop {

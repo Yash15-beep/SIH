@@ -7,6 +7,7 @@ import { Order } from '@/types';
 import {
   Package, CheckCircle2, Truck, Clock, MapPin, ArrowRight,
   ShieldCheck, KeyRound, Sparkles, Check, ChevronDown, FileText
+  , Camera, ScanLine, Loader2, AlertCircle
 } from 'lucide-react';
 
 export default function OrdersPage() {
@@ -20,6 +21,9 @@ export default function OrdersPage() {
   const [otpVerifying, setOtpVerifying] = useState(false);
   const [payoutSuccessMsg, setPayoutSuccessMsg] = useState<{ [orderId: string]: string }>({});
   const [expandedInvoice, setExpandedInvoice] = useState<{ [orderId: string]: boolean }>({});
+  const [activeQualityCheck, setActiveQualityCheck] = useState<{ orderId: string; stage: 'dispatch' | 'receipt' } | null>(null);
+  const [qualityCheckLoading, setQualityCheckLoading] = useState(false);
+  const [qualityCheckMessage, setQualityCheckMessage] = useState<string | null>(null);
 
   const fetchOrders = async () => {
     try {
@@ -68,6 +72,12 @@ export default function OrdersPage() {
       return;
     }
 
+    if (nextStatus === 'out_for_delivery') {
+      setQualityCheckMessage(null);
+      setActiveQualityCheck({ orderId, stage: 'dispatch' });
+      return;
+    }
+
     try {
       const res = await fetch(`/api/orders/${orderId}`, {
         method: 'PATCH',
@@ -79,6 +89,36 @@ export default function OrdersPage() {
       }
     } catch (e) {
       console.error(e);
+    }
+  };
+
+  const handleQualityCheck = async (file?: File) => {
+    if (!file || !activeQualityCheck) return;
+    setQualityCheckLoading(true);
+    setQualityCheckMessage(null);
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('stage', activeQualityCheck.stage);
+    try {
+      const response = await fetch(`/api/orders/${activeQualityCheck.orderId}/quality-check`, { method: 'POST', body: formData });
+      const json = await response.json();
+      if (!response.ok || json.data?.status !== 'verified') {
+        setQualityCheckMessage(json.data?.detail || json.message || 'The photo did not pass the Fresh Vision check.');
+        return;
+      }
+      if (activeQualityCheck.stage === 'dispatch') {
+        await fetch(`/api/orders/${activeQualityCheck.orderId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ delivery_status: 'out_for_delivery' })
+        });
+      }
+      setActiveQualityCheck(null);
+      fetchOrders();
+    } catch {
+      setQualityCheckMessage('Fresh Vision is unavailable. Start the AI service and try again.');
+    } finally {
+      setQualityCheckLoading(false);
     }
   };
 
@@ -153,6 +193,8 @@ export default function OrdersPage() {
             const farmerPayout = Math.round(order.total_price * 0.92);
             const logisticsFee = Math.round(order.total_price * 0.06);
             const platformFee = Math.round(order.total_price * 0.02);
+            const dispatchVerified = order.dispatch_verification?.status === 'verified';
+            const receiptVerified = order.receipt_verification?.status === 'verified';
 
             return (
               <div
@@ -195,6 +237,22 @@ export default function OrdersPage() {
                     )}
                   </div>
                 </div>
+
+                {/* Fresh Vision quality custody trail */}
+                <section className="rounded-2xl border border-emerald-200 bg-emerald-50/50 p-4" aria-label="Fresh Vision quality verification">
+                  <div className="flex items-start gap-2">
+                    <ScanLine className="mt-0.5 h-4 w-4 shrink-0 text-emerald-700" />
+                    <div>
+                      <h4 className="text-sm font-bold text-emerald-950">Fresh Vision quality custody trail</h4>
+                      <p className="mt-0.5 text-[11px] text-emerald-900">Every photo must identify this order&apos;s {order.crop_name} and match its original freshness condition.</p>
+                    </div>
+                  </div>
+                  <div className="mt-3 grid gap-2 text-[11px] sm:grid-cols-3">
+                    <div className="rounded-xl bg-white px-3 py-2 text-slate-700"><strong className="block text-slate-900">1. Listing baseline</strong>{order.listed_freshness || 'Legacy listing — no baseline'}{order.listed_freshness && <span className="block text-emerald-700">{order.crop_name} verified</span>}</div>
+                    <div className={`rounded-xl px-3 py-2 ${dispatchVerified ? 'bg-white text-emerald-800' : 'bg-amber-50 text-amber-900'}`}><strong className="block text-slate-900">2. Farmer dispatch scan</strong>{dispatchVerified ? 'Verified before vehicle dispatch' : order.dispatch_verification?.detail || 'Required before out for delivery'}</div>
+                    <div className={`rounded-xl px-3 py-2 ${receiptVerified ? 'bg-white text-emerald-800' : 'bg-amber-50 text-amber-900'}`}><strong className="block text-slate-900">3. Buyer receipt scan</strong>{receiptVerified ? 'Verified before OTP release' : order.receipt_verification?.detail || 'Required before escrow release'}</div>
+                  </div>
+                </section>
 
                 {/* Escrow Release Payout Banner */}
                 {payoutSuccessMsg[order.id] && (
@@ -319,19 +377,19 @@ export default function OrdersPage() {
                       <KeyRound className="w-5 h-5 text-amber-700 flex-shrink-0" />
                       <div>
                         <div className="font-bold text-xs text-amber-950">
-                          Driver Arrived at Doorstep
+                          {receiptVerified ? 'Buyer quality check passed' : 'Buyer Fresh Vision scan required'}
                         </div>
                         <div className="text-[11px] text-amber-800">
-                          Input customer's 4-digit Delivery OTP (Demo: 5824) to complete delivery & release Escrow payout.
+                          {receiptVerified ? 'Now enter the 4-digit Delivery OTP (Demo: 5824) to complete delivery and release escrow.' : `Upload a current ${order.crop_name} photo first. The detected crop and freshness must match the listing baseline.`}
                         </div>
                       </div>
                     </div>
 
                     <button
-                      onClick={() => setActiveOtpModal(order.id)}
+                      onClick={() => receiptVerified ? setActiveOtpModal(order.id) : (setQualityCheckMessage(null), setActiveQualityCheck({ orderId: order.id, stage: 'receipt' }))}
                       className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-md transition whitespace-nowrap"
                     >
-                      Enter Delivery OTP
+                      {receiptVerified ? 'Enter Delivery OTP' : 'Buyer Scan & Verify'}
                     </button>
                   </div>
                 )}
@@ -387,6 +445,28 @@ export default function OrdersPage() {
           </div>
         </div>
       )}
+
+      {activeQualityCheck && (() => {
+        const order = orders.find((item) => item.id === activeQualityCheck.orderId);
+        const isDispatch = activeQualityCheck.stage === 'dispatch';
+        return (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4" role="dialog" aria-modal="true" aria-labelledby="quality-check-title">
+            <div className="w-full max-w-md space-y-5 rounded-2xl bg-white p-6 shadow-2xl">
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700"><Camera className="h-5 w-5" /></span><div><h3 id="quality-check-title" className="text-lg font-extrabold text-slate-900">{isDispatch ? 'Farmer dispatch scan' : 'Buyer receipt scan'}</h3><p className="mt-1 text-xs text-slate-600">Upload a clear current photo of the {order?.crop_name}.</p></div></div>
+                <button onClick={() => setActiveQualityCheck(null)} className="text-xs font-bold text-slate-500 hover:text-slate-900">Close</button>
+              </div>
+              <div className="rounded-xl bg-slate-50 p-3 text-xs text-slate-700"><strong>Expected crop:</strong> {order?.crop_name}<br /><strong>Baseline freshness:</strong> {order?.listed_freshness || 'Not available — this legacy order cannot pass verification.'}</div>
+              <label className="flex cursor-pointer items-center justify-between rounded-xl bg-emerald-700 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-800">
+                <span className="flex items-center gap-2">{qualityCheckLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <ScanLine className="h-4 w-4" />}{qualityCheckLoading ? 'Checking…' : 'Choose photo and verify'}</span>
+                <input className="sr-only" type="file" accept="image/jpeg,image/png,image/webp" disabled={qualityCheckLoading} onChange={(event) => handleQualityCheck(event.target.files?.[0])} />
+              </label>
+              {qualityCheckMessage && <p className="flex items-start gap-2 rounded-xl bg-rose-50 p-3 text-xs text-rose-800"><AlertCircle className="h-4 w-4 shrink-0" />{qualityCheckMessage}</p>}
+              <p className="text-[11px] leading-relaxed text-slate-500">Fresh Vision validates crop type and freshness condition. It cannot prove two photos show the exact same individual fruit, so KisanSetu records this as a quality-and-crop custody check.</p>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }
