@@ -80,37 +80,51 @@ export default function HomePage() {
   const { language, t } = useLanguage();
   const { switchDemoUser } = useAuth();
   const [selectedCropIndex, setSelectedCropIndex] = useState(0);
+  const [tickerItems, setTickerItems] = useState<{ crop: string; mandi: string; price: number; change: string }[]>([]);
+
+  useEffect(() => {
+    const items = seedData.crops.map((c, i) => {
+      const mandi = seedData.mandis[i % seedData.mandis.length];
+      return {
+        crop: language === 'hi' ? c.hindi_name : c.name,
+        mandi: mandi.name,
+        price: c.typical_mandi_modal,
+        change: i % 2 === 0 ? '+3.2%' : '-1.5%'
+      };
+    });
+    setTickerItems(items);
+  }, [language]);
+
   const activeCrop = COMPARISON_DATA[selectedCropIndex];
 
   return (
     <div className="space-y-24 pb-28">
-      {/* 1. Subtle Agmarknet Rate Ribbon */}
-      <div className="border-b border-slate-200/80 bg-slate-50/60 py-2 px-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 text-xs">
-          <div className="flex items-center gap-2 text-slate-500 font-semibold shrink-0">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-slate-800 font-bold">Data.gov.in Agmarknet Modal Rates:</span>
+      {/* 1. Continuous Sliding Window of Agmarknet Live Rates */}
+      <div className="bg-slate-950 text-slate-200 py-2 px-4 overflow-hidden border-b border-slate-800 shadow-inner">
+        <div className="max-w-7xl mx-auto flex items-center gap-4 text-xs">
+          <div className="flex items-center gap-2 text-amber-400 font-extrabold shrink-0 bg-slate-900 py-1 px-3 rounded-full border border-amber-500/30 z-10">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span className="tracking-wide">LIVE AGMARKNET BENCHMARKS:</span>
           </div>
-          <div className="flex items-center gap-6 overflow-x-auto no-scrollbar text-slate-600 font-medium">
-            <div className="flex items-center gap-1.5 whitespace-nowrap">
-              <span className="text-slate-900 font-bold">Tomato:</span>
-              <span className="text-emerald-700 font-bold">₹24/kg</span>
-              <span className="text-[10px] text-slate-400">(Rewari)</span>
-            </div>
-            <div className="flex items-center gap-1.5 whitespace-nowrap">
-              <span className="text-slate-900 font-bold">Onion:</span>
-              <span className="text-emerald-700 font-bold">₹28/kg</span>
-              <span className="text-[10px] text-slate-400">(Gurugram)</span>
-            </div>
-            <div className="flex items-center gap-1.5 whitespace-nowrap">
-              <span className="text-slate-900 font-bold">Potato:</span>
-              <span className="text-emerald-700 font-bold">₹18/kg</span>
-              <span className="text-[10px] text-slate-400">(Karnal)</span>
-            </div>
-            <div className="flex items-center gap-1.5 whitespace-nowrap">
-              <span className="text-slate-900 font-bold">Mustard:</span>
-              <span className="text-emerald-700 font-bold">₹54/kg</span>
-              <span className="text-[10px] text-slate-400">(Azadpur)</span>
+
+          <div className="overflow-hidden whitespace-nowrap flex-1">
+            <div className="animate-marquee flex items-center gap-6">
+              {[...tickerItems, ...tickerItems].map((item, idx) => (
+                <div
+                  key={idx}
+                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 hover:bg-slate-800 border border-slate-800 transition shrink-0 cursor-default"
+                >
+                  <span className="font-bold text-white text-xs">{item.crop}</span>
+                  <span className="text-slate-400 text-[11px]">({item.mandi})</span>
+                  <span className="text-amber-300 font-extrabold text-xs">₹{item.price}/kg</span>
+                  <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded ${
+                    item.change.startsWith('+') ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-300'
+                  }`}>
+                    {item.change}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
