@@ -43,20 +43,35 @@ button:active:not(:disabled), a.btn:active:not(:disabled) {
   background: #94A3B8;
 }
 
-/* Continuous Marquee Animation */
-@keyframes marquee {
-  0% { transform: translateX(0%); }
+/* Continuous Rates Marquee Animation & Hardware Acceleration */
+@keyframes continuousRatesMarquee {
+  0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
-.animate-marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee 35s linear infinite;
+.rates-marquee-container {
+  mask-image: linear-gradient(to right, transparent 0%, black 48px, black calc(100% - 48px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 48px, black calc(100% - 48px), transparent 100%);
 }
 
-.animate-marquee:hover {
+.rates-marquee-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+  width: max-content;
+  animation: continuousRatesMarquee 32s linear infinite;
+  will-change: transform;
+}
+
+.rates-marquee-track:hover {
   animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rates-marquee-track {
+    animation: none;
+    overflow-x: auto;
+  }
 }
 
 /* Pulse subtle badge animation */

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Truck, MapPin, Play, ShieldCheck, Fuel, Leaf } from 'lucide-react';
 import { RouteStop } from '@/types';
+import LogisticsMap from '@/components/LogisticsMap';
 
 export default function LogisticsPage() {
   const [routeData, setRouteData] = useState<any>(null);
@@ -168,32 +169,13 @@ export default function LogisticsPage() {
           </div>
         </div>
 
-        <div className="lg:col-span-5 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4 flex flex-col justify-between">
-          <div className="space-y-3">
-            <h3 className="font-bold text-slate-900 text-base">Route Polyline & Geometry</h3>
-            <div className="bg-slate-900 text-slate-200 rounded-2xl p-6 space-y-4 text-xs font-mono">
-              <div className="text-amber-400 font-bold">OSRM TRANSIT DISPATCHER:</div>
-              <div className="space-y-1">
-                <div>Origin: Rewari Farmland Node (28.20°N, 76.79°E)</div>
-                <div>Waypoint 1: Sampla Rohtak Hub (28.77°N, 76.77°E)</div>
-                <div>Waypoint 2: Sector 56 Gurugram (28.43°N, 77.10°E)</div>
-                <div>Destination: Connaught Place Sourcing Hub (28.63°N, 77.21°E)</div>
-              </div>
-              <div className="pt-2 border-t border-slate-800 text-emerald-400">
-                STATUS: Multi-stop batch transit active & synchronized with buyer tracking.
-              </div>
-            </div>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-2">
-            <div className="font-bold text-slate-900 flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              Open Source OpenStreetMap Integration
-            </div>
-            <p className="text-[11px] leading-relaxed">
-              Route solver leverages public OSRM matrices with seamless Haversine fallback to ensure zero API fees and complete offline resilience during judging.
-            </p>
-          </div>
+        <div className="lg:col-span-5 space-y-4">
+          <LogisticsMap
+            stops={routeData?.stops || []}
+            totalDistanceKm={routeData?.optimized_distance_km || 235}
+            savedDistanceKm={routeData?.distance_saved_km || 75.2}
+            savingsPct={routeData?.savings_pct || 24}
+          />
         </div>
       </div>
     </div>

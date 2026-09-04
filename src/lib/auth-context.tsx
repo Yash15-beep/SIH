@@ -5,7 +5,8 @@ import { User } from '@/types';
 
 interface AuthContextType {
   currentUser: User | null;
-  setCurrentUser: (user: User) => void;
+  setCurrentUser: (user: User | null) => void;
+  logout: () => Promise<void>;
   switchDemoUser: (role: 'farmer' | 'consumer' | 'bulk_buyer' | 'admin') => void;
   users: User[];
   refreshUsers: () => Promise<void>;
@@ -14,6 +15,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType>({
   currentUser: null,
   setCurrentUser: () => {},
+  logout: async () => {},
   switchDemoUser: () => {},
   users: [],
   refreshUsers: async () => {},
@@ -29,12 +31,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (res.ok) {
         const data = await res.json();
         setUsers(data);
-        if (!currentUser && data.length > 0) {
-          // Default to Ramesh (Farmer) or stored user
-          const savedId = localStorage.getItem('kisansetu_user_id');
-          const found = data.find((u: User) => u.id === savedId) || data[0];
-          setCurrentUserState(found);
-        }
       }
     } catch (e) {
       console.warn('Could not fetch users, fallback initialized');
@@ -42,12 +38,40 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
+    // 1. Restore authenticated user from localStorage if present
+    try {
+      const storedUser = localStorage.getItem('kisansetu_current_user');
+      if (storedUser) {
+        const parsed = JSON.parse(storedUser);
+        if (parsed && parsed.id) {
+          setCurrentUserState(parsed);
+        }
+      }
+    } catch (e) {
+      console.warn('Could not parse stored user');
+    }
+
     fetchUsers();
   }, []);
 
-  const setCurrentUser = (user: User) => {
+  const setCurrentUser = (user: User | null) => {
     setCurrentUserState(user);
-    localStorage.setItem('kisansetu_user_id', user.id);
+    if (user) {
+      localStorage.setItem('kisansetu_current_user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('kisansetu_current_user');
+      localStorage.removeItem('kisansetu_user_id');
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch (e) {
+      console.error('Logout error', e);
+    } finally {
+      setCurrentUser(null);
+    }
   };
 
   const switchDemoUser = (role: 'farmer' | 'consumer' | 'bulk_buyer' | 'admin') => {
@@ -58,7 +82,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ currentUser, setCurrentUser, switchDemoUser, users, refreshUsers: fetchUsers }}>
+    <AuthContext.Provider value={{ currentUser, setCurrentUser, logout, switchDemoUser, users, refreshUsers: fetchUsers }}>
       {children}
     </AuthContext.Provider>
   );

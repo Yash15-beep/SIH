@@ -102,7 +102,7 @@
       "farmer_lat": 28.2055,
       "farmer_lng": 76.7944,
       "crop_name": "Tomato",
-      "quantity_kg": 850,
+      "quantity_kg": 845,
       "price_per_kg": 22,
       "ai_suggested_price": 23,
       "mandi_benchmark_price": 24,
@@ -120,7 +120,7 @@
       "farmer_lat": 28.2055,
       "farmer_lng": 76.7944,
       "crop_name": "Onion",
-      "quantity_kg": 1395,
+      "quantity_kg": 1270,
       "price_per_kg": 26,
       "ai_suggested_price": 27,
       "mandi_benchmark_price": 28,
@@ -205,6 +205,54 @@
   "orders": [
     {
       "listing_id": "lst_onion_01",
+      "buyer_id": "usr_bulk_sanjay",
+      "buyer_name": "Sanjay Mehra (Grand Imperial Hotels)",
+      "crop_name": "Onion",
+      "farmer_id": "usr_farmer_ramesh",
+      "farmer_name": "Ramesh Kumar (रामेश)",
+      "farmer_village": "Dharuhera, Rewari",
+      "quantity_kg": 100,
+      "total_price": 2600,
+      "payment_status": "test_paid",
+      "delivery_status": "delivered",
+      "delivery_address": "Connaught Place, Central Delhi",
+      "id": "ord_1788563266917",
+      "created_at": "2026-09-04T23:07:46.917Z"
+    },
+    {
+      "listing_id": "lst_onion_01",
+      "buyer_id": "usr_bulk_sanjay",
+      "buyer_name": "Sanjay Mehra (Grand Imperial Hotels)",
+      "crop_name": "Onion",
+      "farmer_id": "usr_farmer_ramesh",
+      "farmer_name": "Ramesh Kumar (रामेश)",
+      "farmer_village": "Dharuhera, Rewari",
+      "quantity_kg": 25,
+      "total_price": 650,
+      "payment_status": "test_paid",
+      "delivery_status": "routed",
+      "delivery_address": "Connaught Place, Central Delhi",
+      "id": "ord_1788560785035",
+      "created_at": "2026-09-04T22:26:25.035Z"
+    },
+    {
+      "listing_id": "lst_tomato_01",
+      "buyer_id": "usr_farmer_ramesh",
+      "buyer_name": "Ramesh Kumar (रामेश)",
+      "crop_name": "Tomato",
+      "farmer_id": "usr_farmer_ramesh",
+      "farmer_name": "Ramesh Kumar (रामेश)",
+      "farmer_village": "Dharuhera, Rewari",
+      "quantity_kg": 5,
+      "total_price": 110,
+      "payment_status": "test_paid",
+      "delivery_status": "routed",
+      "delivery_address": "Dharuhera, Rewari",
+      "id": "ord_1788541935983",
+      "created_at": "2026-09-04T17:12:15.983Z"
+    },
+    {
+      "listing_id": "lst_onion_01",
       "buyer_id": "usr_farmer_ramesh",
       "buyer_name": "Ramesh Kumar (रामेश)",
       "crop_name": "Onion",
@@ -231,7 +279,7 @@
       "quantity_kg": 10,
       "total_price": 220,
       "payment_status": "test_paid",
-      "delivery_status": "out_for_delivery",
+      "delivery_status": "routed",
       "delivery_address": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
       "created_at": "2026-09-04T04:45:42.648Z"
     },
@@ -247,7 +295,7 @@
       "quantity_kg": 25,
       "total_price": 650,
       "payment_status": "test_paid",
-      "delivery_status": "confirmed",
+      "delivery_status": "routed",
       "delivery_address": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
       "created_at": "2026-09-04T00:45:42.648Z"
     },
@@ -280,7 +328,1848 @@
       "created_at": "2026-09-02T08:45:42.648Z"
     }
   ],
-  "routes": [],
+  "routes": [
+    {
+      "stop_sequence": [
+        {
+          "order_id": "ord_1788560785035",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:30 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "08:55 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "08:80 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:105 AM"
+        },
+        {
+          "order_id": "ord_1788560785035",
+          "type": "drop",
+          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
+          "location_name": "Connaught Place, Central Delhi",
+          "lat": 28.6304,
+          "lng": 77.2177,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:15 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "drop",
+          "name": "Delivery: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "10:45 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "drop",
+          "name": "Delivery: Priya Sharma",
+          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
+          "lat": 28.432,
+          "lng": 77.1025,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "10:75 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "drop",
+          "name": "Delivery: Ankit Verma",
+          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
+          "lat": 28.5921,
+          "lng": 77.046,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:105 AM"
+        }
+      ],
+      "total_distance_km": 235,
+      "total_time_min": 517,
+      "distance_saved_km": 75.2,
+      "savings_pct": 24,
+      "id": "rt_1788565197621",
+      "created_at": "2026-09-04T23:39:57.621Z"
+    },
+    {
+      "stop_sequence": [
+        {
+          "order_id": "ord_1788560785035",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:30 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "08:55 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "08:80 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:105 AM"
+        },
+        {
+          "order_id": "ord_1788560785035",
+          "type": "drop",
+          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
+          "location_name": "Connaught Place, Central Delhi",
+          "lat": 28.6304,
+          "lng": 77.2177,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:15 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "drop",
+          "name": "Delivery: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "10:45 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "drop",
+          "name": "Delivery: Priya Sharma",
+          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
+          "lat": 28.432,
+          "lng": 77.1025,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "10:75 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "drop",
+          "name": "Delivery: Ankit Verma",
+          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
+          "lat": 28.5921,
+          "lng": 77.046,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:105 AM"
+        }
+      ],
+      "total_distance_km": 235,
+      "total_time_min": 517,
+      "distance_saved_km": 75.2,
+      "savings_pct": 24,
+      "id": "rt_1788564998724",
+      "created_at": "2026-09-04T23:36:38.724Z"
+    },
+    {
+      "stop_sequence": [
+        {
+          "order_id": "ord_1788560785035",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:30 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "08:55 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "08:80 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:105 AM"
+        },
+        {
+          "order_id": "ord_1788560785035",
+          "type": "drop",
+          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
+          "location_name": "Connaught Place, Central Delhi",
+          "lat": 28.6304,
+          "lng": 77.2177,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:15 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "drop",
+          "name": "Delivery: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "10:45 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "drop",
+          "name": "Delivery: Priya Sharma",
+          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
+          "lat": 28.432,
+          "lng": 77.1025,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "10:75 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "drop",
+          "name": "Delivery: Ankit Verma",
+          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
+          "lat": 28.5921,
+          "lng": 77.046,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:105 AM"
+        }
+      ],
+      "total_distance_km": 235,
+      "total_time_min": 517,
+      "distance_saved_km": 75.2,
+      "savings_pct": 24,
+      "id": "rt_1788564964213",
+      "created_at": "2026-09-04T23:36:04.213Z"
+    },
+    {
+      "stop_sequence": [
+        {
+          "order_id": "ord_1788560785035",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:30 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "08:55 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "08:80 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:105 AM"
+        },
+        {
+          "order_id": "ord_1788560785035",
+          "type": "drop",
+          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
+          "location_name": "Connaught Place, Central Delhi",
+          "lat": 28.6304,
+          "lng": 77.2177,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:15 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "drop",
+          "name": "Delivery: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "10:45 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "drop",
+          "name": "Delivery: Priya Sharma",
+          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
+          "lat": 28.432,
+          "lng": 77.1025,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "10:75 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "drop",
+          "name": "Delivery: Ankit Verma",
+          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
+          "lat": 28.5921,
+          "lng": 77.046,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:105 AM"
+        }
+      ],
+      "total_distance_km": 235,
+      "total_time_min": 517,
+      "distance_saved_km": 75.2,
+      "savings_pct": 24,
+      "id": "rt_1788564942749",
+      "created_at": "2026-09-04T23:35:42.749Z"
+    },
+    {
+      "stop_sequence": [
+        {
+          "order_id": "ord_1788560785035",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:30 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "08:55 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "08:80 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:105 AM"
+        },
+        {
+          "order_id": "ord_1788560785035",
+          "type": "drop",
+          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
+          "location_name": "Connaught Place, Central Delhi",
+          "lat": 28.6304,
+          "lng": 77.2177,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:15 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "drop",
+          "name": "Delivery: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "10:45 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "drop",
+          "name": "Delivery: Priya Sharma",
+          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
+          "lat": 28.432,
+          "lng": 77.1025,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "10:75 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "drop",
+          "name": "Delivery: Ankit Verma",
+          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
+          "lat": 28.5921,
+          "lng": 77.046,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:105 AM"
+        }
+      ],
+      "total_distance_km": 235,
+      "total_time_min": 517,
+      "distance_saved_km": 75.2,
+      "savings_pct": 24,
+      "id": "rt_1788564875270",
+      "created_at": "2026-09-04T23:34:35.270Z"
+    },
+    {
+      "stop_sequence": [
+        {
+          "order_id": "ord_1788560785035",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:30 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "08:55 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "08:80 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:105 AM"
+        },
+        {
+          "order_id": "ord_1788560785035",
+          "type": "drop",
+          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
+          "location_name": "Connaught Place, Central Delhi",
+          "lat": 28.6304,
+          "lng": 77.2177,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:15 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "drop",
+          "name": "Delivery: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "10:45 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "drop",
+          "name": "Delivery: Priya Sharma",
+          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
+          "lat": 28.432,
+          "lng": 77.1025,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "10:75 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "drop",
+          "name": "Delivery: Ankit Verma",
+          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
+          "lat": 28.5921,
+          "lng": 77.046,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:105 AM"
+        }
+      ],
+      "total_distance_km": 235,
+      "total_time_min": 517,
+      "distance_saved_km": 75.2,
+      "savings_pct": 24,
+      "id": "rt_1788564683416",
+      "created_at": "2026-09-04T23:31:23.416Z"
+    },
+    {
+      "stop_sequence": [
+        {
+          "order_id": "ord_1788560785035",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:30 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "08:55 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "08:80 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:105 AM"
+        },
+        {
+          "order_id": "ord_1788560785035",
+          "type": "drop",
+          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
+          "location_name": "Connaught Place, Central Delhi",
+          "lat": 28.6304,
+          "lng": 77.2177,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:15 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "drop",
+          "name": "Delivery: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "10:45 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "drop",
+          "name": "Delivery: Priya Sharma",
+          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
+          "lat": 28.432,
+          "lng": 77.1025,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "10:75 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "drop",
+          "name": "Delivery: Ankit Verma",
+          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
+          "lat": 28.5921,
+          "lng": 77.046,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:105 AM"
+        }
+      ],
+      "total_distance_km": 235,
+      "total_time_min": 517,
+      "distance_saved_km": 75.2,
+      "savings_pct": 24,
+      "id": "rt_1788564664548",
+      "created_at": "2026-09-04T23:31:04.548Z"
+    },
+    {
+      "stop_sequence": [
+        {
+          "order_id": "ord_1788560785035",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:30 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "08:55 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "08:80 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:105 AM"
+        },
+        {
+          "order_id": "ord_1788560785035",
+          "type": "drop",
+          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
+          "location_name": "Connaught Place, Central Delhi",
+          "lat": 28.6304,
+          "lng": 77.2177,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:15 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "drop",
+          "name": "Delivery: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "10:45 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "drop",
+          "name": "Delivery: Priya Sharma",
+          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
+          "lat": 28.432,
+          "lng": 77.1025,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "10:75 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "drop",
+          "name": "Delivery: Ankit Verma",
+          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
+          "lat": 28.5921,
+          "lng": 77.046,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:105 AM"
+        }
+      ],
+      "total_distance_km": 235,
+      "total_time_min": 517,
+      "distance_saved_km": 75.2,
+      "savings_pct": 24,
+      "id": "rt_1788564465962",
+      "created_at": "2026-09-04T23:27:45.962Z"
+    },
+    {
+      "stop_sequence": [
+        {
+          "order_id": "ord_1788560785035",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:30 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "08:55 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "08:80 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:105 AM"
+        },
+        {
+          "order_id": "ord_1788560785035",
+          "type": "drop",
+          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
+          "location_name": "Connaught Place, Central Delhi",
+          "lat": 28.6304,
+          "lng": 77.2177,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:15 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "drop",
+          "name": "Delivery: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "10:45 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "drop",
+          "name": "Delivery: Priya Sharma",
+          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
+          "lat": 28.432,
+          "lng": 77.1025,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "10:75 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "drop",
+          "name": "Delivery: Ankit Verma",
+          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
+          "lat": 28.5921,
+          "lng": 77.046,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:105 AM"
+        }
+      ],
+      "total_distance_km": 235,
+      "total_time_min": 517,
+      "distance_saved_km": 75.2,
+      "savings_pct": 24,
+      "id": "rt_1788563760560",
+      "created_at": "2026-09-04T23:16:00.560Z"
+    },
+    {
+      "stop_sequence": [
+        {
+          "order_id": "ord_1788560785035",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:30 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "08:55 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "08:80 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:105 AM"
+        },
+        {
+          "order_id": "ord_1788560785035",
+          "type": "drop",
+          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
+          "location_name": "Connaught Place, Central Delhi",
+          "lat": 28.6304,
+          "lng": 77.2177,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:15 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "drop",
+          "name": "Delivery: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "10:45 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "drop",
+          "name": "Delivery: Priya Sharma",
+          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
+          "lat": 28.432,
+          "lng": 77.1025,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "10:75 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "drop",
+          "name": "Delivery: Ankit Verma",
+          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
+          "lat": 28.5921,
+          "lng": 77.046,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:105 AM"
+        }
+      ],
+      "total_distance_km": 235,
+      "total_time_min": 517,
+      "distance_saved_km": 75.2,
+      "savings_pct": 24,
+      "id": "rt_1788563729563",
+      "created_at": "2026-09-04T23:15:29.563Z"
+    },
+    {
+      "stop_sequence": [
+        {
+          "order_id": "ord_1788560785035",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:30 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "08:55 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "08:80 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:105 AM"
+        },
+        {
+          "order_id": "ord_1788560785035",
+          "type": "drop",
+          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
+          "location_name": "Connaught Place, Central Delhi",
+          "lat": 28.6304,
+          "lng": 77.2177,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:15 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "drop",
+          "name": "Delivery: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "10:45 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "drop",
+          "name": "Delivery: Priya Sharma",
+          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
+          "lat": 28.432,
+          "lng": 77.1025,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "10:75 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "drop",
+          "name": "Delivery: Ankit Verma",
+          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
+          "lat": 28.5921,
+          "lng": 77.046,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:105 AM"
+        }
+      ],
+      "total_distance_km": 235,
+      "total_time_min": 517,
+      "distance_saved_km": 75.2,
+      "savings_pct": 24,
+      "id": "rt_1788563689675",
+      "created_at": "2026-09-04T23:14:49.675Z"
+    },
+    {
+      "stop_sequence": [
+        {
+          "order_id": "ord_1788560785035",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:30 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "08:55 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "08:80 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:105 AM"
+        },
+        {
+          "order_id": "ord_1788560785035",
+          "type": "drop",
+          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
+          "location_name": "Connaught Place, Central Delhi",
+          "lat": 28.6304,
+          "lng": 77.2177,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:15 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "drop",
+          "name": "Delivery: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "10:45 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "drop",
+          "name": "Delivery: Priya Sharma",
+          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
+          "lat": 28.432,
+          "lng": 77.1025,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "10:75 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "drop",
+          "name": "Delivery: Ankit Verma",
+          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
+          "lat": 28.5921,
+          "lng": 77.046,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:105 AM"
+        }
+      ],
+      "total_distance_km": 235,
+      "total_time_min": 517,
+      "distance_saved_km": 75.2,
+      "savings_pct": 24,
+      "id": "rt_1788563689146",
+      "created_at": "2026-09-04T23:14:49.146Z"
+    },
+    {
+      "stop_sequence": [
+        {
+          "order_id": "ord_1788560785035",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:30 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "08:55 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "08:80 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:105 AM"
+        },
+        {
+          "order_id": "ord_1788560785035",
+          "type": "drop",
+          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
+          "location_name": "Connaught Place, Central Delhi",
+          "lat": 28.6304,
+          "lng": 77.2177,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:15 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "drop",
+          "name": "Delivery: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "10:45 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "drop",
+          "name": "Delivery: Priya Sharma",
+          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
+          "lat": 28.432,
+          "lng": 77.1025,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "10:75 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "drop",
+          "name": "Delivery: Ankit Verma",
+          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
+          "lat": 28.5921,
+          "lng": 77.046,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:105 AM"
+        }
+      ],
+      "total_distance_km": 235,
+      "total_time_min": 517,
+      "distance_saved_km": 75.2,
+      "savings_pct": 24,
+      "id": "rt_1788563688239",
+      "created_at": "2026-09-04T23:14:48.239Z"
+    },
+    {
+      "stop_sequence": [
+        {
+          "order_id": "ord_1788560785035",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:30 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "08:55 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "08:80 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:105 AM"
+        },
+        {
+          "order_id": "ord_1788560785035",
+          "type": "drop",
+          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
+          "location_name": "Connaught Place, Central Delhi",
+          "lat": 28.6304,
+          "lng": 77.2177,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:15 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "drop",
+          "name": "Delivery: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "10:45 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "drop",
+          "name": "Delivery: Priya Sharma",
+          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
+          "lat": 28.432,
+          "lng": 77.1025,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "10:75 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "drop",
+          "name": "Delivery: Ankit Verma",
+          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
+          "lat": 28.5921,
+          "lng": 77.046,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:105 AM"
+        }
+      ],
+      "total_distance_km": 235,
+      "total_time_min": 517,
+      "distance_saved_km": 75.2,
+      "savings_pct": 24,
+      "id": "rt_1788563682537",
+      "created_at": "2026-09-04T23:14:42.537Z"
+    },
+    {
+      "stop_sequence": [
+        {
+          "order_id": "ord_1788541935983",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "08:30 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "08:55 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:80 AM"
+        },
+        {
+          "order_id": "ord_demo_03",
+          "type": "pickup",
+          "name": "Pickup: Suresh Yadav",
+          "location_name": "Taraori, Karnal",
+          "lat": 29.802,
+          "lng": 76.929,
+          "crop_name": "Potato",
+          "quantity_kg": 400,
+          "eta": "08:105 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "drop",
+          "name": "Delivery: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "10:15 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "drop",
+          "name": "Delivery: Priya Sharma",
+          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
+          "lat": 28.432,
+          "lng": 77.1025,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "10:45 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "drop",
+          "name": "Delivery: Ankit Verma",
+          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
+          "lat": 28.5921,
+          "lng": 77.046,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:75 AM"
+        },
+        {
+          "order_id": "ord_demo_03",
+          "type": "drop",
+          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
+          "location_name": "Grand Imperial Hotel Kitchen Sourcing Dock, CP, New Delhi",
+          "lat": 28.6304,
+          "lng": 77.2177,
+          "crop_name": "Potato",
+          "quantity_kg": 400,
+          "eta": "10:105 AM"
+        }
+      ],
+      "total_distance_km": 552,
+      "total_time_min": 1214,
+      "distance_saved_km": 176.6,
+      "savings_pct": 24,
+      "id": "rt_1788542811174",
+      "created_at": "2026-09-04T17:26:51.174Z"
+    },
+    {
+      "stop_sequence": [
+        {
+          "order_id": "ord_1788541935983",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "08:30 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "08:55 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:80 AM"
+        },
+        {
+          "order_id": "ord_demo_03",
+          "type": "pickup",
+          "name": "Pickup: Suresh Yadav",
+          "location_name": "Taraori, Karnal",
+          "lat": 29.802,
+          "lng": 76.929,
+          "crop_name": "Potato",
+          "quantity_kg": 400,
+          "eta": "08:105 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "drop",
+          "name": "Delivery: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "10:15 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "drop",
+          "name": "Delivery: Priya Sharma",
+          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
+          "lat": 28.432,
+          "lng": 77.1025,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "10:45 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "drop",
+          "name": "Delivery: Ankit Verma",
+          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
+          "lat": 28.5921,
+          "lng": 77.046,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:75 AM"
+        },
+        {
+          "order_id": "ord_demo_03",
+          "type": "drop",
+          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
+          "location_name": "Grand Imperial Hotel Kitchen Sourcing Dock, CP, New Delhi",
+          "lat": 28.6304,
+          "lng": 77.2177,
+          "crop_name": "Potato",
+          "quantity_kg": 400,
+          "eta": "10:105 AM"
+        }
+      ],
+      "total_distance_km": 552,
+      "total_time_min": 1214,
+      "distance_saved_km": 176.6,
+      "savings_pct": 24,
+      "id": "rt_1788542401279",
+      "created_at": "2026-09-04T17:20:01.279Z"
+    },
+    {
+      "stop_sequence": [
+        {
+          "order_id": "ord_1788541935983",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "08:30 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "08:55 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:80 AM"
+        },
+        {
+          "order_id": "ord_demo_03",
+          "type": "pickup",
+          "name": "Pickup: Suresh Yadav",
+          "location_name": "Taraori, Karnal",
+          "lat": 29.802,
+          "lng": 76.929,
+          "crop_name": "Potato",
+          "quantity_kg": 400,
+          "eta": "08:105 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "drop",
+          "name": "Delivery: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "10:15 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "drop",
+          "name": "Delivery: Priya Sharma",
+          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
+          "lat": 28.432,
+          "lng": 77.1025,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "10:45 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "drop",
+          "name": "Delivery: Ankit Verma",
+          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
+          "lat": 28.5921,
+          "lng": 77.046,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:75 AM"
+        },
+        {
+          "order_id": "ord_demo_03",
+          "type": "drop",
+          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
+          "location_name": "Grand Imperial Hotel Kitchen Sourcing Dock, CP, New Delhi",
+          "lat": 28.6304,
+          "lng": 77.2177,
+          "crop_name": "Potato",
+          "quantity_kg": 400,
+          "eta": "10:105 AM"
+        }
+      ],
+      "total_distance_km": 552,
+      "total_time_min": 1214,
+      "distance_saved_km": 176.6,
+      "savings_pct": 24,
+      "id": "rt_1788542324997",
+      "created_at": "2026-09-04T17:18:44.997Z"
+    },
+    {
+      "stop_sequence": [
+        {
+          "order_id": "ord_1788541935983",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "08:30 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "08:55 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:80 AM"
+        },
+        {
+          "order_id": "ord_demo_03",
+          "type": "pickup",
+          "name": "Pickup: Suresh Yadav",
+          "location_name": "Taraori, Karnal",
+          "lat": 29.802,
+          "lng": 76.929,
+          "crop_name": "Potato",
+          "quantity_kg": 400,
+          "eta": "08:105 AM"
+        },
+        {
+          "order_id": "ord_1788541935983",
+          "type": "drop",
+          "name": "Delivery: Ramesh Kumar (रामेश)",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 5,
+          "eta": "10:15 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "drop",
+          "name": "Delivery: Priya Sharma",
+          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
+          "lat": 28.432,
+          "lng": 77.1025,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "10:45 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "drop",
+          "name": "Delivery: Ankit Verma",
+          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
+          "lat": 28.5921,
+          "lng": 77.046,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:75 AM"
+        },
+        {
+          "order_id": "ord_demo_03",
+          "type": "drop",
+          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
+          "location_name": "Grand Imperial Hotel Kitchen Sourcing Dock, CP, New Delhi",
+          "lat": 28.6304,
+          "lng": 77.2177,
+          "crop_name": "Potato",
+          "quantity_kg": 400,
+          "eta": "10:105 AM"
+        }
+      ],
+      "total_distance_km": 552,
+      "total_time_min": 1214,
+      "distance_saved_km": 176.6,
+      "savings_pct": 24,
+      "id": "rt_1788542303289",
+      "created_at": "2026-09-04T17:18:23.289Z"
+    },
+    {
+      "stop_sequence": [
+        {
+          "order_id": "ord_demo_01",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "08:30 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "pickup",
+          "name": "Pickup: Ramesh Kumar",
+          "location_name": "Dharuhera, Rewari",
+          "lat": 28.2055,
+          "lng": 76.7944,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "08:55 AM"
+        },
+        {
+          "order_id": "ord_demo_03",
+          "type": "pickup",
+          "name": "Pickup: Suresh Yadav",
+          "location_name": "Taraori, Karnal",
+          "lat": 29.802,
+          "lng": 76.929,
+          "crop_name": "Potato",
+          "quantity_kg": 400,
+          "eta": "08:80 AM"
+        },
+        {
+          "order_id": "ord_demo_01",
+          "type": "drop",
+          "name": "Delivery: Priya Sharma",
+          "location_name": "Flat 402, Oakwood Apts, Sector 56, Gurugram",
+          "lat": 28.432,
+          "lng": 77.1025,
+          "crop_name": "Tomato",
+          "quantity_kg": 10,
+          "eta": "10:15 AM"
+        },
+        {
+          "order_id": "ord_demo_02",
+          "type": "drop",
+          "name": "Delivery: Ankit Verma",
+          "location_name": "B-12, Sector 12 Pocket 4, Dwarka, New Delhi",
+          "lat": 28.5921,
+          "lng": 77.046,
+          "crop_name": "Onion",
+          "quantity_kg": 25,
+          "eta": "10:45 AM"
+        },
+        {
+          "order_id": "ord_demo_03",
+          "type": "drop",
+          "name": "Delivery: Sanjay Mehra (Grand Imperial Hotels)",
+          "location_name": "Grand Imperial Hotel Kitchen Sourcing Dock, CP, New Delhi",
+          "lat": 28.6304,
+          "lng": 77.2177,
+          "crop_name": "Potato",
+          "quantity_kg": 400,
+          "eta": "10:75 AM"
+        }
+      ],
+      "total_distance_km": 470,
+      "total_time_min": 1034,
+      "distance_saved_km": 150.4,
+      "savings_pct": 24,
+      "id": "rt_1788541757082",
+      "created_at": "2026-09-04T17:09:17.082Z"
+    }
+  ],
   "price_cache": [
     {
       "id": "pc_tomato_rewarimandi_2026-08-05",

@@ -21,6 +21,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 import seedData from '@/data/agmarknet_seed_data.json';
+import EconomicVisualizer from '@/components/EconomicVisualizer';
 
 interface CropComparison {
   name: string;
@@ -108,47 +109,24 @@ export default function HomePage() {
   const activeCrop = COMPARISON_DATA[selectedCropIndex];
 
   return (
-    <div className="space-y-24 pb-28">
-      {/* Explicit Inline Marquee Style with Edge Fade Masking */}
-      <style>{`
-        @keyframes continuousRatesMarquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .rates-marquee-container {
-          mask-image: linear-gradient(to right, transparent 0%, black 60px, black calc(100% - 60px), transparent 100%);
-          -webkit-mask-image: linear-gradient(to right, transparent 0%, black 60px, black calc(100% - 60px), transparent 100%);
-        }
-        .rates-marquee-track {
-          display: inline-flex;
-          align-items: center;
-          gap: 1.5rem;
-          width: max-content;
-          animation: continuousRatesMarquee 32s linear infinite;
-          will-change: transform;
-        }
-        .rates-marquee-track:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
-
-      {/* 1. Harmonious Sliding Window of Agmarknet Live Rates */}
-      <div className="bg-emerald-50/60 backdrop-blur-sm border-b border-emerald-100/90 py-2.5 px-4 shadow-xs overflow-hidden">
-        <div className="max-w-7xl mx-auto flex items-center gap-4 text-xs relative">
+    <div className="pb-28">
+      {/* 1. Harmonious Sliding Window of Agmarknet Live Rates - Flush under Navbar */}
+      <div className="w-full bg-emerald-50/70 backdrop-blur-sm border-b border-emerald-100/90 py-2 px-4 shadow-2xs overflow-hidden">
+        <div className="max-w-7xl mx-auto flex items-center gap-3 text-xs relative">
           {/* Static Live Badge with Solid Backdrop */}
-          <div className="flex items-center gap-2 text-emerald-950 font-bold shrink-0 bg-white py-1.5 px-4 rounded-full border border-emerald-200/90 shadow-sm z-20">
+          <div className="flex items-center gap-2 text-emerald-950 font-bold shrink-0 bg-white py-1 px-3.5 rounded-full border border-emerald-200/90 shadow-xs z-20">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
             <span className="tracking-wide text-[11px] whitespace-nowrap">LIVE AGMARKNET BENCHMARKS:</span>
           </div>
 
-          {/* Marquee Track with Isolated Overflow and Soft 60px Edge Fading */}
-          <div className="overflow-hidden whitespace-nowrap flex-1 min-w-0 relative rates-marquee-container pl-4">
+          {/* Marquee Track with Isolated Overflow and Soft Edge Fading */}
+          <div className="overflow-hidden whitespace-nowrap flex-1 min-w-0 relative rates-marquee-container pl-2">
             <div className="rates-marquee-track">
               {[...tickerItems, ...tickerItems, ...tickerItems].map((item, idx) => (
                 <div
                   key={idx}
-                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white hover:bg-emerald-50/80 border border-slate-200/90 shadow-xs transition shrink-0 cursor-default"
+                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white hover:bg-emerald-50/80 border border-slate-200/90 shadow-xs transition shrink-0 cursor-default"
                 >
                   <span className="font-extrabold text-slate-900 text-xs">{item.crop}</span>
                   <span className="text-slate-400 text-[11px]">({item.mandi})</span>
@@ -165,8 +143,9 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* 2. Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+      <div className="space-y-20 lg:space-y-24">
+        {/* 2. Hero Section */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 lg:pt-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* Left Column: Focused, uncluttered messaging */}
@@ -291,6 +270,11 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* 2.5 Full Interactive Value-Chain Simulator */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <EconomicVisualizer />
+      </section>
+
       {/* 3. Four Role Portals (Airy Bento Grid) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto space-y-2 mb-10">
@@ -396,6 +380,7 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
+      </div>
     </div>
   );
 }

@@ -23,7 +23,7 @@ import { AuthModal } from '@/components/AuthModal';
 export function Navbar() {
   const pathname = usePathname();
   const { language, toggleLanguage, t } = useLanguage();
-  const { currentUser, switchDemoUser } = useAuth();
+  const { currentUser, switchDemoUser, logout } = useAuth();
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isPersonaMenuOpen, setIsPersonaMenuOpen] = useState(false);
 
@@ -99,72 +99,98 @@ export function Navbar() {
               <span>{language === 'hi' ? 'English' : 'हिंदी'}</span>
             </button>
 
-            {/* Persona Switcher Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => setIsPersonaMenuOpen(!isPersonaMenuOpen)}
-                className="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition flex items-center gap-2 shadow-sm"
-              >
-                <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                <span className="max-w-[110px] truncate">
-                  {currentUser ? currentUser.name.split(' ')[0] : 'Persona'}
-                </span>
-                <span className="text-[10px] px-1.5 py-0.2 rounded bg-slate-800 text-slate-300 font-mono">
-                  {currentUser?.role?.replace('_', ' ') || 'guest'}
-                </span>
-                <ChevronDown className="w-3 h-3 text-slate-400" />
-              </button>
+            {/* Authenticated User / Persona Controls */}
+            {currentUser ? (
+              <div className="relative">
+                <button
+                  onClick={() => setIsPersonaMenuOpen(!isPersonaMenuOpen)}
+                  className="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition flex items-center gap-2 shadow-xs"
+                >
+                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                  <span className="max-w-[120px] truncate">
+                    {currentUser.name}
+                  </span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-emerald-300 font-mono capitalize">
+                    {currentUser.role?.replace('_', ' ')}
+                  </span>
+                  <ChevronDown className="w-3 h-3 text-slate-400" />
+                </button>
 
-              {/* Persona Dropdown Menu */}
-              {isPersonaMenuOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl border border-slate-200 shadow-xl py-2 z-50 animate-in fade-in zoom-in-95 duration-150">
-                  <div className="px-3 py-1.5 border-b border-slate-100 mb-1">
-                    <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                      Switch Role (Hackathon Demo)
+                {/* Authenticated User Menu */}
+                {isPersonaMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-72 bg-white rounded-2xl border border-slate-200 shadow-xl py-2 z-50 animate-in fade-in zoom-in-95 duration-150">
+                    {/* User Info Header */}
+                    <div className="px-4 py-2.5 border-b border-slate-100">
+                      <div className="text-xs font-extrabold text-slate-900 truncate">{currentUser.name}</div>
+                      <div className="text-[11px] text-slate-500 truncate">{currentUser.email}</div>
+                      <div className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md inline-block mt-1 capitalize">
+                        Role: {currentUser.role?.replace('_', ' ')} {currentUser.village ? `• ${currentUser.village}` : ''}
+                      </div>
+                    </div>
+
+                    {/* Switch Role Quick Tools for Evaluation */}
+                    <div className="px-3 py-1.5 border-b border-slate-100 bg-slate-50/50">
+                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+                        Switch Persona (Hackathon Evaluation)
+                      </div>
+                      <div className="space-y-1">
+                        {personas.map((p) => (
+                          <button
+                            key={p.id}
+                            onClick={() => {
+                              switchDemoUser(p.id as any);
+                              setIsPersonaMenuOpen(false);
+                            }}
+                            className={`w-full text-left px-2.5 py-1.5 rounded-xl text-xs flex items-center justify-between transition ${
+                              currentUser?.role === p.id && currentUser?.id.startsWith('usr_')
+                                ? 'bg-emerald-50 text-emerald-950 font-bold border border-emerald-200'
+                                : 'text-slate-700 hover:bg-white'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2">
+                              <span>{p.icon}</span>
+                              <span className="font-semibold text-xs">{p.name} ({p.role})</span>
+                            </div>
+                            {currentUser?.role === p.id && (
+                              <UserCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Logout Action */}
+                    <div className="p-2">
+                      <button
+                        onClick={async () => {
+                          setIsPersonaMenuOpen(false);
+                          await logout();
+                        }}
+                        className="w-full py-2 rounded-xl text-center text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 transition flex items-center justify-center gap-1.5"
+                      >
+                        <LogOut className="w-3.5 h-3.5" />
+                        <span>Sign Out of Account</span>
+                      </button>
                     </div>
                   </div>
-                  <div className="space-y-0.5 px-1.5">
-                    {personas.map((p) => (
-                      <button
-                        key={p.id}
-                        onClick={() => {
-                          switchDemoUser(p.id as any);
-                          setIsPersonaMenuOpen(false);
-                        }}
-                        className={`w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between transition ${
-                          currentUser?.role === p.id
-                            ? 'bg-emerald-50 text-emerald-950 font-bold border border-emerald-200'
-                            : 'text-slate-700 hover:bg-slate-50'
-                        }`}
-                      >
-                        <div className="flex items-center gap-2">
-                          <span>{p.icon}</span>
-                          <div>
-                            <div className="font-semibold text-xs">{p.name}</div>
-                            <div className="text-[10px] text-slate-400">{p.role} • {p.location}</div>
-                          </div>
-                        </div>
-                        {currentUser?.role === p.id && (
-                          <UserCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                        )}
-                      </button>
-                    ))}
-                  </div>
-
-                  <div className="mt-2 pt-2 border-t border-slate-100 px-2">
-                    <button
-                      onClick={() => {
-                        setIsPersonaMenuOpen(false);
-                        setIsAuthOpen(true);
-                      }}
-                      className="w-full py-1.5 rounded-lg text-center text-xs font-bold text-emerald-800 bg-emerald-50/80 hover:bg-emerald-100 transition"
-                    >
-                      Open Supabase Auth Modal
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Link
+                  href="/login"
+                  className="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100 transition"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/signup"
+                  className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs transition"
+                >
+                  Sign Up
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>

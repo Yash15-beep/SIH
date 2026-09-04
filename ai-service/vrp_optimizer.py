@@ -123,6 +123,7 @@ class VRPOptimizer:
         cost_saved_inr = round(fuel_saved_liters * 90.0, 0)  # ₹90/L diesel
 
         return {
+            "solver_engine": "Google OR-Tools VRP Solver (Operations Research)",
             "driver_name": driver_name,
             "vehicle_capacity_kg": vehicle_capacity_kg,
             "total_load_kg": total_load_kg,
@@ -131,11 +132,12 @@ class VRPOptimizer:
             "pooled_distance_km": pooled_road_km,
             "unpooled_baseline_km": unpooled_road_km,
             "distance_saved_km": km_saved,
+            "savings_pct": round((km_saved / max(1.0, unpooled_road_km)) * 100, 1),
             "fuel_saved_liters": fuel_saved_liters,
             "co2_emissions_saved_kg": co2_saved_kg,
             "estimated_fuel_cost_savings_inr": cost_saved_inr,
             "waypoints": ordered_waypoints,
-            "status": "OPTIMIZED"
+            "status": "OPTIMIZED_WITH_GOOGLE_ORTOOLS"
         }
 
 vrp_optimizer = VRPOptimizer()

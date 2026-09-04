@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 
 export default function OrdersPage() {
-  const { currentUser } = useAuth();
+  const { currentUser, switchDemoUser } = useAuth();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -110,23 +110,47 @@ export default function OrdersPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 space-y-8">
+      {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6">
         <div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-bold mb-2">
             <ShieldCheck className="w-4 h-4 text-emerald-700" />
-            Direct Escrow Protection & Live Dispatch Tracking
+            Role-Enforced Escrow Protection & Live Dispatch Tracking
           </div>
           <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
             Order Tracking & Escrow Payouts
           </h1>
           <p className="text-xs text-slate-500 mt-1">
-            Funds held securely in KisanSetu Escrow until 4-digit Delivery OTP verification.
+            Stage progression is governed by role permissions. Funds locked in Escrow until Buyer OTP verification.
           </p>
         </div>
 
-        <div className="bg-white border border-slate-200 px-4 py-3 rounded-2xl shadow-sm self-start sm:self-auto">
-          <div className="text-[10px] uppercase font-bold text-slate-400">Demo Delivery OTP</div>
-          <div className="text-xl font-black text-brand-700 tracking-widest font-mono">5824</div>
+        {/* Current Active Persona & Switcher */}
+        <div className="flex items-center gap-2 bg-white border border-slate-200 p-2.5 rounded-2xl shadow-xs self-start sm:self-auto">
+          <div className="text-xs pr-2 border-r border-slate-200">
+            <span className="text-[10px] uppercase font-bold text-slate-400 block">Logged in as:</span>
+            <strong className="text-slate-800 font-extrabold capitalize flex items-center gap-1">
+              {currentUser?.role === 'farmer' ? '🌾 Farmer' : currentUser?.role === 'admin' ? '🏛️ Admin' : '🛒 Buyer'} ({currentUser?.name?.split(' ')[0] || 'Demo'})
+            </strong>
+          </div>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => { switchDemoUser('farmer'); fetchOrders(); }}
+              className={`px-2.5 py-1.5 rounded-xl text-[11px] font-bold transition ${
+                currentUser?.role === 'farmer' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }`}
+            >
+              🌾 Farmer
+            </button>
+            <button
+              onClick={() => { switchDemoUser('consumer'); fetchOrders(); }}
+              className={`px-2.5 py-1.5 rounded-xl text-[11px] font-bold transition ${
+                currentUser?.role === 'consumer' || currentUser?.role === 'bulk_buyer' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }`}
+            >
+              🛒 Buyer
+            </button>
+          </div>
         </div>
       </div>
 
@@ -137,10 +161,13 @@ export default function OrdersPage() {
       ) : userOrders.length === 0 ? (
         <div className="p-16 text-center bg-white rounded-3xl border border-slate-200 space-y-3">
           <Package className="w-12 h-12 text-slate-400 mx-auto" />
-          <div className="font-bold text-slate-700">No active orders found</div>
+          <div className="font-bold text-slate-700">No active orders found for this persona</div>
+          <p className="text-xs text-slate-500 max-w-sm mx-auto">
+            Switch persona above or purchase produce in the marketplace to test the full 5-stage escrow delivery lifecycle!
+          </p>
           <Link
             href="/marketplace"
-            className="inline-block px-5 py-2.5 bg-brand-700 text-white rounded-xl text-xs font-bold shadow-md hover:bg-brand-800"
+            className="inline-block px-5 py-2.5 bg-emerald-600 text-white rounded-xl text-xs font-bold shadow-sm hover:bg-emerald-700 transition"
           >
             Browse Marketplace
           </Link>
@@ -154,10 +181,14 @@ export default function OrdersPage() {
             const logisticsFee = Math.round(order.total_price * 0.06);
             const platformFee = Math.round(order.total_price * 0.02);
 
+            const isFarmer = currentUser?.role === 'farmer' || order.farmer_id === currentUser?.id;
+            const isBuyer = currentUser?.role === 'consumer' || currentUser?.role === 'bulk_buyer' || order.buyer_id === currentUser?.id;
+            const isAdmin = currentUser?.role === 'admin';
+
             return (
               <div
                 key={order.id}
-                className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6 hover:shadow-md transition"
+                className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-6 hover:shadow-sm transition"
               >
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
@@ -179,19 +210,76 @@ export default function OrdersPage() {
                     </h3>
                   </div>
 
-                  <div className="flex items-center gap-4">
-                    <div className="text-right">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                    <div className="text-left sm:text-right">
                       <div className="text-xs text-slate-400 font-medium">Total Amount</div>
-                      <div className="text-2xl font-black text-brand-700">₹{order.total_price.toLocaleString()}</div>
+                      <div className="text-2xl font-black text-emerald-700">₹{order.total_price.toLocaleString()}</div>
                     </div>
 
+                    {/* Role-Specific Action Buttons */}
                     {!isDelivered && (
-                      <button
-                        onClick={() => advanceOrderStatus(order.id, order.delivery_status)}
-                        className="px-4 py-2.5 rounded-xl bg-brand-700 hover:bg-brand-800 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5"
-                      >
-                        Advance Stage <ArrowRight className="w-4 h-4" />
-                      </button>
+                      <div className="flex items-center gap-2">
+                        {order.delivery_status === 'placed' && (
+                          isFarmer || isAdmin ? (
+                            <button
+                              onClick={() => advanceOrderStatus(order.id, 'placed')}
+                              className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm transition flex items-center gap-1.5"
+                            >
+                              🌾 Farmer: Accept Order <ArrowRight className="w-4 h-4" />
+                            </button>
+                          ) : (
+                            <div className="text-xs font-bold text-amber-700 bg-amber-50 px-3 py-2 rounded-xl border border-amber-200 flex items-center gap-1.5">
+                              <Clock className="w-3.5 h-3.5 animate-spin text-amber-600" />
+                              <span>Waiting for Farmer Acceptance</span>
+                            </div>
+                          )
+                        )}
+
+                        {order.delivery_status === 'confirmed' && (
+                          isFarmer || isAdmin ? (
+                            <button
+                              onClick={() => advanceOrderStatus(order.id, 'confirmed')}
+                              className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm transition flex items-center gap-1.5"
+                            >
+                              🚚 Assign to Route Pool <ArrowRight className="w-4 h-4" />
+                            </button>
+                          ) : (
+                            <div className="text-xs font-bold text-blue-700 bg-blue-50 px-3 py-2 rounded-xl border border-blue-200">
+                              📦 Produce Packed • Awaiting Route Pickup
+                            </div>
+                          )
+                        )}
+
+                        {order.delivery_status === 'routed' && (
+                          isFarmer || isAdmin ? (
+                            <button
+                              onClick={() => advanceOrderStatus(order.id, 'routed')}
+                              className="px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-sm transition flex items-center gap-1.5"
+                            >
+                              🚀 Dispatch Driver <ArrowRight className="w-4 h-4" />
+                            </button>
+                          ) : (
+                            <div className="text-xs font-bold text-purple-700 bg-purple-50 px-3 py-2 rounded-xl border border-purple-200">
+                              🚚 In Transit with Pooled Carrier
+                            </div>
+                          )
+                        )}
+
+                        {order.delivery_status === 'out_for_delivery' && (
+                          isBuyer || isAdmin ? (
+                            <button
+                              onClick={() => setActiveOtpModal(order.id)}
+                              className="px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-sm transition flex items-center gap-1.5"
+                            >
+                              🔑 Enter Delivery OTP to Release Escrow
+                            </button>
+                          ) : (
+                            <div className="text-xs font-bold text-amber-800 bg-amber-50 px-3 py-2 rounded-xl border border-amber-200">
+                              🔔 Driver at Doorstep • Awaiting Buyer OTP Handover
+                            </div>
+                          )
+                        )}
+                      </div>
                     )}
                   </div>
                 </div>
@@ -199,7 +287,7 @@ export default function OrdersPage() {
                 {/* Escrow Release Payout Banner */}
                 {payoutSuccessMsg[order.id] && (
                   <div className="bg-emerald-50 border-2 border-emerald-500 text-emerald-900 p-4 rounded-2xl text-xs font-bold flex items-center gap-2 animate-pulse">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
                     <span>{payoutSuccessMsg[order.id]}</span>
                   </div>
                 )}
@@ -216,9 +304,9 @@ export default function OrdersPage() {
                           <div
                             className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition ${
                               isCurrent
-                                ? 'bg-brand-700 text-white ring-4 ring-brand-100 shadow-md'
+                                ? 'bg-emerald-600 text-white ring-4 ring-emerald-100 shadow-xs'
                                 : isComplete
-                                ? 'bg-emerald-600 text-white'
+                                ? 'bg-emerald-700 text-white'
                                 : 'bg-slate-100 text-slate-400 border border-slate-200'
                             }`}
                           >
@@ -227,21 +315,21 @@ export default function OrdersPage() {
                           <span
                             className={`text-[11px] font-semibold capitalize ${
                               isCurrent
-                                ? 'text-brand-900 font-bold'
+                                ? 'text-emerald-900 font-bold'
                                 : isComplete
                                 ? 'text-slate-800'
                                 : 'text-slate-400'
                             }`}
                           >
                             {st === 'placed'
-                              ? '1. Escrow Placed'
+                              ? '1. Escrow Locked'
                               : st === 'confirmed'
-                              ? '2. Pooled'
+                              ? '2. Farmer Accepted'
                               : st === 'routed'
-                              ? '3. Driver En Route'
+                              ? '3. Pooled in Route'
                               : st === 'out_for_delivery'
                               ? '4. Out for Delivery'
-                              : '5. Delivered & Paid'}
+                              : '5. Delivered & Disbursed'}
                           </span>
                         </div>
                       );

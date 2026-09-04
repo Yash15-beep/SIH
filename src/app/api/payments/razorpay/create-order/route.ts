@@ -10,24 +10,30 @@ export async function POST(req: NextRequest) {
 
     // 1. If real Razorpay credentials are provided in .env, call official API
     if (keyId && keySecret && !keyId.includes('demo') && !keyId.includes('YOUR_KEY')) {
-      const authHeader = 'Basic ' + Buffer.from(`${keyId}:${keySecret}`).toString('base64');
-      const res = await fetch('https://api.razorpay.com/v1/orders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': authHeader
-        },
-        body: JSON.stringify({
-          amount: Math.round(amount * 100), // amount in paise
-          currency,
-          receipt: receipt || `rcpt_${Date.now()}`,
-          notes: notes || { platform: 'KisanSetu-Escrow' }
-        })
-      });
+      try {
+        const authHeader = 'Basic ' + Buffer.from(`${keyId}:${keySecret}`).toString('base64');
+        const res = await fetch('https://api.razorpay.com/v1/orders', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': authHeader
+          },
+          body: JSON.stringify({
+            amount: Math.round(amount * 100), // amount in paise
+            currency,
+            receipt: receipt || `rcpt_${Date.now()}`,
+            notes: notes || { platform: 'KisanSetu-Escrow' }
+          })
+        });
 
-      if (res.ok) {
-        const order = await res.json();
-        return NextResponse.json({ success: true, order, mode: 'live_sandbox' });
+        const data = await res.json();
+        if (res.ok) {
+          return NextResponse.json({ success: true, order: data, key_id: keyId, mode: 'live_sandbox' });
+        } else {
+          console.warn('[Razorpay API Warning]', data);
+        }
+      } catch (apiErr) {
+        console.warn('[Razorpay Fetch Error]', apiErr);
       }
     }
 
