@@ -76,11 +76,21 @@ const COMPARISON_DATA: CropComparison[] = [
   }
 ];
 
+const initialTickerItems = seedData.crops.map((c, i) => {
+  const mandi = seedData.mandis[i % seedData.mandis.length];
+  return {
+    crop: c.name,
+    mandi: mandi.name,
+    price: c.typical_mandi_modal,
+    change: i % 2 === 0 ? '+3.2%' : '-1.5%'
+  };
+});
+
 export default function HomePage() {
   const { language, t } = useLanguage();
   const { switchDemoUser } = useAuth();
   const [selectedCropIndex, setSelectedCropIndex] = useState(0);
-  const [tickerItems, setTickerItems] = useState<{ crop: string; mandi: string; price: number; change: string }[]>([]);
+  const [tickerItems, setTickerItems] = useState(initialTickerItems);
 
   useEffect(() => {
     const items = seedData.crops.map((c, i) => {
