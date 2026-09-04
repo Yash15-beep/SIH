@@ -109,6 +109,25 @@ export default function HomePage() {
 
   return (
     <div className="space-y-24 pb-28">
+      {/* Explicit Inline Marquee Style to guarantee 100% animation execution */}
+      <style>{`
+        @keyframes continuousRatesMarquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .rates-marquee-track {
+          display: inline-flex;
+          align-items: center;
+          gap: 1.5rem;
+          width: max-content;
+          animation: continuousRatesMarquee 28s linear infinite;
+          will-change: transform;
+        }
+        .rates-marquee-track:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+
       {/* 1. Continuous Sliding Window of Agmarknet Live Rates */}
       <div className="bg-slate-950 text-slate-200 py-2 px-4 overflow-hidden border-b border-slate-800 shadow-inner">
         <div className="max-w-7xl mx-auto flex items-center gap-4 text-xs">
@@ -119,8 +138,8 @@ export default function HomePage() {
           </div>
 
           <div className="overflow-hidden whitespace-nowrap flex-1">
-            <div className="animate-marquee flex items-center gap-6">
-              {[...tickerItems, ...tickerItems].map((item, idx) => (
+            <div className="rates-marquee-track">
+              {[...tickerItems, ...tickerItems, ...tickerItems].map((item, idx) => (
                 <div
                   key={idx}
                   className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 hover:bg-slate-800 border border-slate-800 transition shrink-0 cursor-default"
