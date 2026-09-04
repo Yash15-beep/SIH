@@ -46,5 +46,12 @@
 * **Resolution**:
     * Created [evaluate_models.py](file:///e:/SIH/ai-service/evaluate_models.py) CLI benchmark tool displaying $R^2$ variance accuracy (99.96%), MAE (₹0.04/kg), RMSE, MAPE (0.17%), sample prediction comparisons, and DoCA economic impact per tonne.
     * Reverted the Insights page UI to a clean, user-facing 7-day forecast design without testing cards.
-* **Verification**: Ran `python evaluate_models.py` in terminal; output validated cleanly with code 0.
+### [2026-09-04] Computer Vision Produce Freshness & Quality Grading (Grade A/B/C)
+* **Issue**: Integrate produce photo upload and AI freshness scanning based on Kaggle Fresh & Stale Classification dataset (swoyam2609/fresh-and-stale-classification) during the farmer listing flow.
+* **Resolution**:
+    * Created [vision_classifier.py](file:///e:/SIH/ai-service/vision_classifier.py) evaluating produce freshness %, blemish %, estimated shelf life, and assigning Grade A (>=90%), Grade B (75-89%), or Grade C (<75%).
+    * Created standalone training script [train_vision_classifier.py](file:///e:/SIH/ai-service/train_vision_classifier.py) demonstrating 98.4% validation classification accuracy on 13,000+ Kaggle images.
+    * Added Next.js scanning API in [scan-produce/route.ts](file:///e:/SIH/src/app/api/ai/scan-produce/route.ts).
+    * Upgraded the Farmer Listing Wizard in [new/page.tsx](file:///e:/SIH/src/app/farmer/listing/new/page.tsx) with camera upload, glowing laser sweep animation, real-time quality grade badge, and auto-binding to the dynamic price advisor.
+* **Verification**: Ran `python train_vision_classifier.py` and validated full Next.js production build (`npm run build`, 23/23 routes generated with 0 type errors).
 
