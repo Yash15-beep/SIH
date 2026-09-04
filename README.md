@@ -89,6 +89,17 @@ python main.py
 ```
 FastAPI documentation will be available at **[http://localhost:8000/docs](http://localhost:8000/docs)**.
 
+### Fresh Vision produce-quality scan
+
+The included `Fresh-Vision/` directory contains the trained freshness and
+produce-identification models. A Fresh Vision scan is required when a farmer
+creates a listing: it must identify the crop selected in the form, then maps
+calibrated freshness to Grade A/B/C and the price recommendation. The same
+baseline is checked again before farmer dispatch and buyer receipt; a crop or
+freshness mismatch blocks dispatch or escrow release. Marketplace cards update
+the listing age automatically. Set `FRESH_VISION_MODEL_DIR` only when the
+model folder is located outside the project root.
+
 ---
 
 ## 📂 Project Structure

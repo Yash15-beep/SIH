@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth-context';
 import { Listing } from '@/types';
-import { ShoppingBag, MapPin, Sparkles, Filter, Search, ArrowRight, ShieldCheck, Check } from 'lucide-react';
+import { ShoppingBag, MapPin, Sparkles, Search, ArrowRight, Clock, ScanLine } from 'lucide-react';
 import seedData from '@/data/agmarknet_seed_data.json';
 
 export default function MarketplacePage() {
@@ -16,6 +16,7 @@ export default function MarketplacePage() {
   const [selectedCrop, setSelectedCrop] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
+  const [now, setNow] = useState(() => Date.now());
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -33,6 +34,20 @@ export default function MarketplacePage() {
     };
     fetchListings();
   }, []);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(Date.now()), 30_000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const listedAgo = (createdAt: string) => {
+    const minutes = Math.max(0, Math.floor((now - new Date(createdAt).getTime()) / 60_000));
+    if (minutes < 1) return 'Listed just now';
+    if (minutes < 60) return `Listed ${minutes}m ago`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `Listed ${hours}h ago`;
+    return `Listed ${Math.floor(hours / 24)}d ago`;
+  };
 
   const filteredListings = listings.filter(item => {
     if (selectedCrop !== 'All' && item.crop_name.toLowerCase() !== selectedCrop.toLowerCase()) return false;
@@ -179,6 +194,10 @@ export default function MarketplacePage() {
                       <div className="bg-brand-50/70 p-2.5 rounded-xl text-xs text-brand-900 flex items-center justify-between border border-brand-200">
                         <span>Farmer Direct:</span>
                         <strong className="text-brand-800">{item.farmer_name}</strong>
+                      </div>
+                      <div className="flex items-center justify-between text-[11px] text-slate-500">
+                        <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{listedAgo(item.created_at)}</span>
+                        {item.freshness && <span className="flex items-center gap-1 font-semibold text-emerald-700"><ScanLine className="w-3.5 h-3.5" />Fresh Vision: {item.freshness}</span>}
                       </div>
                     </div>
 

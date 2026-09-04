@@ -35,6 +35,8 @@ export async function POST(req: NextRequest) {
       farmer_id: listing.farmer_id,
       farmer_name: listing.farmer_name,
       farmer_village: listing.farmer_village,
+      listed_freshness: listing.freshness,
+      listed_freshness_key: listing.freshness_key,
       quantity_kg: Number(quantity_kg),
       total_price,
       payment_status: 'test_paid',

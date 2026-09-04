@@ -24,6 +24,13 @@ export async function POST(
       }, { status: 400 });
     }
 
+    if (order.receipt_verification?.status !== 'verified') {
+      return NextResponse.json({
+        success: false,
+        error: 'Buyer Fresh Vision receipt verification is required before delivery can be completed.'
+      }, { status: 409 });
+    }
+
     // Update order status to DELIVERED
     db.updateOrderStatus(id, 'delivered', 'test_paid');
 

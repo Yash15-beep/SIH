@@ -14,10 +14,10 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { farmer_id, crop_name, quantity_kg, price_per_kg, harvest_date, image_url } = body;
+    const { farmer_id, crop_name, quantity_kg, price_per_kg, harvest_date, image_url, freshness, freshness_key, freshness_confidence, shelf_life } = body;
 
-    if (!farmer_id || !crop_name || !quantity_kg) {
-      return NextResponse.json({ error: { message: 'Missing required fields' } }, { status: 400 });
+    if (!farmer_id || !crop_name || !quantity_kg || !freshness || !freshness_key) {
+      return NextResponse.json({ error: { message: 'A Fresh Vision crop and freshness scan is required before publishing.' } }, { status: 400 });
     }
 
     const farmer = db.getUserById(farmer_id);
@@ -37,6 +37,11 @@ export async function POST(req: NextRequest) {
       mandi_benchmark_price: benchmark ? benchmark.modal_price : undefined,
       harvest_date: harvestDateFormatted(harvest_date),
       image_url: image_url || undefined,
+      freshness: freshness || undefined,
+      freshness_key: freshness_key || undefined,
+      freshness_confidence: freshness_confidence ? Number(freshness_confidence) : undefined,
+      shelf_life: shelf_life || undefined,
+      freshness_scanned_at: freshness ? new Date().toISOString() : undefined,
     });
 
     return NextResponse.json({ data: listing }, { status: 201 });
