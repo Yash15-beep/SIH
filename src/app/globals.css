@@ -5,9 +5,9 @@
 :root {
   --background: #FAFAF7;
   --foreground: #0F172A;
-  --primary-green: #1B5E20;
-  --emerald-accent: #2E7D32;
-  --harvest-amber: #F59E0B;
+  --primary-green: #15803d;
+  --emerald-accent: #16a34a;
+  --harvest-amber: #d97706;
 }
 
 body {
@@ -15,18 +15,19 @@ body {
   background: var(--background);
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* Emil Kowalski & Apple Design Tactile Physics */
+/* Tactile Physics & Spring Transitions */
 button, a, input[type="button"], input[type="submit"] {
-  transition: transform 120ms ease-out, background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+  transition: transform 140ms cubic-bezier(0.16, 1, 0.3, 1), background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
 }
 
 button:active:not(:disabled), a.btn:active:not(:disabled) {
   transform: scale(0.97);
 }
 
-/* Custom crisp scroller */
+/* Custom scroller */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -42,12 +43,42 @@ button:active:not(:disabled), a.btn:active:not(:disabled) {
   background: #94A3B8;
 }
 
-/* Pulse badge animation */
+/* Continuous Marquee Animation */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Pulse subtle badge animation */
 @keyframes pulse-subtle {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(0.98); }
+  50% { opacity: 0.85; transform: scale(0.98); }
 }
 
 .animate-pulse-subtle {
   animation: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Ambient Aura Backgrounds */
+.bg-mesh-glow {
+  background-image: radial-gradient(at 0% 0%, rgba(22, 163, 74, 0.12) 0px, transparent 50%),
+                    radial-gradient(at 100% 0%, rgba(217, 119, 6, 0.10) 0px, transparent 50%),
+                    radial-gradient(at 50% 50%, rgba(30, 58, 138, 0.04) 0px, transparent 50%);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
 }
