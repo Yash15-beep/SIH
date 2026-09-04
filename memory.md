@@ -84,4 +84,11 @@
     * Created interactive [AuthModal.tsx](file:///e:/SIH/src/components/AuthModal.tsx) supporting role selection (Farmer, Consumer, Bulk Buyer, Transporter, DoCA Official) and 1-click Fast-Login evaluation buttons.
     * Integrated Auth trigger and active user profile badge into [Navbar.tsx](file:///e:/SIH/src/components/Navbar.tsx).
 * **Verification**: Verified with full Next.js production build (`npm run build`, 27/27 static/dynamic routes + Edge Middleware compiled with 0 errors).
+### [2026-09-04] Live Supabase PostgreSQL Schema Push & Multi-Entity Database Seeding
+* **Issue**: Push Prisma schema to live Supabase PostgreSQL project and seed initial records for users, listings, demand posts, and Agmarknet price benchmarks.
+* **Resolution**:
+    * Configured Tokyo region transaction pooler and session URLs in [.env](file:///e:/SIH/.env) and [.env.local](file:///e:/SIH/.env.local).
+    * Synchronized database schema with `npx prisma db push` across 6 core entities (`users`, `produce_listings`, `orders`, `demand_posts`, `price_benchmarks`, `logistics_routes`).
+    * Seeded 7 demo personas, 6 active produce listings, B2B demand posts, and 500 Agmarknet benchmark records in [seed-prisma.ts](file:///e:/SIH/scripts/seed-prisma.ts).
+* **Verification**: Ran `npm run seed:prisma` with 100% success and exit code 0.
 

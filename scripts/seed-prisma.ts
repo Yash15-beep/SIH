@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🌱 Starting KisanSetu Prisma PostgreSQL Database Seed...');
 
-  const dataPath = path.join(process.cwd(), 'src', 'data', 'agmarknet_seed_data.json');
+  const dataPath = path.join(process.cwd(), 'src', 'data', 'db_store.json');
   if (!fs.existsSync(dataPath)) {
     console.error('❌ Data file not found:', dataPath);
     return;
@@ -17,96 +17,131 @@ async function main() {
 
   // 1. Seed Users
   console.log('👤 Seeding Users...');
-  for (const user of rawData.demoUsers || []) {
+  const users = rawData.users || [];
+  for (const user of users) {
+    const roleMapping: Record<string, Role> = {
+      farmer: Role.FARMER,
+      consumer: Role.CONSUMER,
+      bulk_buyer: Role.BULK_BUYER,
+      admin: Role.DOCA,
+      logistics: Role.LOGISTICS,
+    };
+    const role = roleMapping[user.role] || Role.FARMER;
+
     await prisma.user.upsert({
       where: { phone: user.phone },
       update: {
         name: user.name,
-        role: user.role as Role,
+        role,
         email: user.email,
-        location: user.location,
+        location: user.village || 'Sonipat, Haryana',
         lat: user.lat || 28.6139,
         lng: user.lng || 77.2090,
-        kisanId: user.kisanId,
-        rating: user.rating || 4.8,
-        verified: user.verified || false,
       },
       create: {
         id: user.id,
         phone: user.phone,
         name: user.name,
-        role: user.role as Role,
+        role,
         email: user.email,
-        location: user.location,
+        location: user.village || 'Sonipat, Haryana',
         lat: user.lat || 28.6139,
         lng: user.lng || 77.2090,
-        kisanId: user.kisanId,
-        rating: user.rating || 4.8,
-        verified: user.verified || false,
       },
     });
   }
-  console.log(`✅ Seeded ${rawData.demoUsers?.length || 0} users.`);
+  console.log(`✅ Seeded ${users.length} users.`);
 
   // 2. Seed Produce Listings
   console.log('🌾 Seeding Produce Listings...');
-  for (const listing of rawData.listings || []) {
+  const listings = rawData.listings || [];
+  for (const listing of listings) {
     await prisma.produceListing.upsert({
       where: { id: listing.id },
       update: {
-        crop: listing.crop,
-        cropHi: listing.cropHi,
-        variety: listing.variety,
-        quantityKg: listing.quantityKg,
-        minOrderKg: listing.minOrderKg || 1,
-        pricePerKg: listing.pricePerKg,
-        mandiReferencePrice: listing.mandiReferencePrice,
-        estimatedRetailPrice: listing.estimatedRetailPrice,
-        qualityGrade: listing.qualityGrade || 'Grade A',
-        harvestDate: listing.harvestDate,
-        location: listing.location,
-        lat: listing.lat || 28.6139,
-        lng: listing.lng || 77.2090,
-        imageUrl: listing.imageUrl,
-        status: (listing.status as ListingStatus) || ListingStatus.ACTIVE,
+        crop: listing.crop_name,
+        variety: listing.quality_grade,
+        quantityKg: listing.quantity_kg,
+        minOrderKg: listing.min_order_kg || 1,
+        pricePerKg: listing.price_per_kg,
+        mandiReferencePrice: listing.mandi_benchmark_price || listing.price_per_kg,
+        estimatedRetailPrice: listing.retail_benchmark_price || listing.price_per_kg * 1.6,
+        qualityGrade: listing.quality_grade || 'Grade A',
+        harvestDate: listing.harvest_date || '2026-09-01',
+        location: listing.farmer_village || 'Haryana',
+        lat: listing.farmer_lat || 28.6139,
+        lng: listing.farmer_lng || 77.2090,
+        imageUrl: listing.image_url,
+        status: ListingStatus.ACTIVE,
       },
       create: {
         id: listing.id,
-        farmerId: listing.farmerId,
-        crop: listing.crop,
-        cropHi: listing.cropHi,
-        variety: listing.variety,
-        quantityKg: listing.quantityKg,
-        minOrderKg: listing.minOrderKg || 1,
-        pricePerKg: listing.pricePerKg,
-        mandiReferencePrice: listing.mandiReferencePrice,
-        estimatedRetailPrice: listing.estimatedRetailPrice,
-        qualityGrade: listing.qualityGrade || 'Grade A',
-        harvestDate: listing.harvestDate,
-        location: listing.location,
-        lat: listing.lat || 28.6139,
-        lng: listing.lng || 77.2090,
-        imageUrl: listing.imageUrl,
-        status: (listing.status as ListingStatus) || ListingStatus.ACTIVE,
+        farmerId: listing.farmer_id,
+        crop: listing.crop_name,
+        variety: listing.quality_grade,
+        quantityKg: listing.quantity_kg,
+        minOrderKg: listing.min_order_kg || 1,
+        pricePerKg: listing.price_per_kg,
+        mandiReferencePrice: listing.mandi_benchmark_price || listing.price_per_kg,
+        estimatedRetailPrice: listing.retail_benchmark_price || listing.price_per_kg * 1.6,
+        qualityGrade: listing.quality_grade || 'Grade A',
+        harvestDate: listing.harvest_date || '2026-09-01',
+        location: listing.farmer_village || 'Haryana',
+        lat: listing.farmer_lat || 28.6139,
+        lng: listing.farmer_lng || 77.2090,
+        imageUrl: listing.image_url,
+        status: ListingStatus.ACTIVE,
       },
     });
   }
-  console.log(`✅ Seeded ${rawData.listings?.length || 0} produce listings.`);
+  console.log(`✅ Seeded ${listings.length} produce listings.`);
 
-  // 3. Seed Price Benchmarks (batch insert for high speed)
+  // 3. Seed Demand Posts
+  console.log('🏢 Seeding B2B Demand Posts...');
+  const demandPosts = rawData.demand_posts || [];
+  for (const demand of demandPosts) {
+    await prisma.demandPost.upsert({
+      where: { id: demand.id },
+      update: {
+        crop: demand.crop_name,
+        targetQuantityKg: demand.quantity_kg,
+        maxPricePerKg: demand.target_price_per_kg || 35.0,
+        targetDeliveryDate: demand.required_by_date || '2026-09-10',
+        deliveryLocation: demand.delivery_address || 'Delhi NCR',
+        status: DemandStatus.OPEN,
+        matchedFarmerCount: 0,
+      },
+      create: {
+        id: demand.id,
+        buyerId: demand.buyer_id,
+        buyerName: demand.buyer_name,
+        buyerOrg: demand.buyer_name,
+        crop: demand.crop_name,
+        targetQuantityKg: demand.quantity_kg,
+        maxPricePerKg: demand.target_price_per_kg || 35.0,
+        targetDeliveryDate: demand.required_by_date || '2026-09-10',
+        deliveryLocation: demand.delivery_address || 'Delhi NCR',
+        status: DemandStatus.OPEN,
+        matchedFarmerCount: 0,
+      },
+    });
+  }
+  console.log(`✅ Seeded ${demandPosts.length} demand posts.`);
+
+  // 4. Seed Price Benchmarks
   console.log('📊 Seeding Agmarknet Price Benchmarks...');
-  const benchmarks = rawData.priceBenchmarks || [];
-  if (benchmarks.length > 0) {
-    // Delete existing and re-insert or insertMany
+  const priceCache = rawData.price_cache || [];
+  if (priceCache.length > 0) {
     await prisma.priceBenchmark.deleteMany({});
-    const records = benchmarks.map((b: any) => ({
-      commodity: b.commodity,
-      market: b.market,
-      state: b.state,
-      minPrice: Number(b.minPrice),
-      maxPrice: Number(b.maxPrice),
-      modalPrice: Number(b.modalPrice),
-      recordedDate: b.recordedDate,
+    const records = priceCache.slice(0, 500).map((b: any, idx: number) => ({
+      id: b.id || `bench_${idx}`,
+      commodity: b.crop_name,
+      market: b.mandi_region || 'Rewari Mandi',
+      state: 'Haryana',
+      minPrice: Number(b.min_price || b.modal_price * 0.9),
+      maxPrice: Number(b.max_price || b.modal_price * 1.1),
+      modalPrice: Number(b.modal_price),
+      recordedDate: b.price_date || '2026-09-04',
     }));
 
     await prisma.priceBenchmark.createMany({
@@ -115,37 +150,6 @@ async function main() {
     });
     console.log(`✅ Seeded ${records.length} Agmarknet price benchmarks.`);
   }
-
-  // 4. Seed Demand Posts
-  console.log('🏢 Seeding B2B Demand Posts...');
-  for (const demand of rawData.demandPosts || []) {
-    await prisma.demandPost.upsert({
-      where: { id: demand.id },
-      update: {
-        crop: demand.crop,
-        targetQuantityKg: demand.targetQuantityKg,
-        maxPricePerKg: demand.maxPricePerKg,
-        targetDeliveryDate: demand.targetDeliveryDate,
-        deliveryLocation: demand.deliveryLocation,
-        status: (demand.status as DemandStatus) || DemandStatus.OPEN,
-        matchedFarmerCount: demand.matchedFarmerCount || 0,
-      },
-      create: {
-        id: demand.id,
-        buyerId: demand.buyerId,
-        buyerName: demand.buyerName,
-        buyerOrg: demand.buyerOrg,
-        crop: demand.crop,
-        targetQuantityKg: demand.targetQuantityKg,
-        maxPricePerKg: demand.maxPricePerKg,
-        targetDeliveryDate: demand.targetDeliveryDate,
-        deliveryLocation: demand.deliveryLocation,
-        status: (demand.status as DemandStatus) || DemandStatus.OPEN,
-        matchedFarmerCount: demand.matchedFarmerCount || 0,
-      },
-    });
-  }
-  console.log(`✅ Seeded ${rawData.demandPosts?.length || 0} demand posts.`);
 
   console.log('✨ Prisma PostgreSQL seeding completed successfully!');
 }
