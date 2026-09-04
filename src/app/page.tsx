@@ -133,17 +133,19 @@ export default function HomePage() {
       `}</style>
 
       {/* 1. Harmonious Sliding Window of Agmarknet Live Rates */}
-      <div className="bg-emerald-50/50 backdrop-blur-sm border-b border-emerald-100/90 py-2 px-4 shadow-xs">
-        <div className="max-w-7xl mx-auto flex items-center gap-4 text-xs">
+      <div className="bg-emerald-50/50 backdrop-blur-sm border-b border-emerald-100/90 py-2.5 px-4 shadow-xs">
+        <div className="max-w-7xl mx-auto flex items-center gap-3.5 text-xs">
           {/* Static Live Badge with Solid Backdrop */}
-          <div className="flex items-center gap-2 text-emerald-950 font-bold shrink-0 bg-white py-1 px-3.5 rounded-full border border-emerald-200/80 shadow-xs z-10">
+          <div className="flex items-center gap-2 text-emerald-950 font-bold shrink-0 bg-white py-1 px-3.5 rounded-full border border-emerald-200/80 shadow-xs">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-            <span className="tracking-wide text-[11px]">LIVE AGMARKNET BENCHMARKS:</span>
+            <span className="tracking-wide text-[11px] whitespace-nowrap">LIVE AGMARKNET BENCHMARKS:</span>
           </div>
 
-          {/* Marquee Track with Soft Edge Fading */}
-          <div className="overflow-hidden whitespace-nowrap flex-1 rates-marquee-container">
+          <div className="h-4 w-px bg-emerald-200/80 shrink-0 hidden sm:block" />
+
+          {/* Marquee Track with Isolated Overflow and Soft Edge Fading */}
+          <div className="overflow-hidden whitespace-nowrap flex-1 min-w-0 relative rates-marquee-container">
             <div className="rates-marquee-track">
               {[...tickerItems, ...tickerItems, ...tickerItems].map((item, idx) => (
                 <div
