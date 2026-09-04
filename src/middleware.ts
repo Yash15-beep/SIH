@@ -11,7 +11,7 @@ export async function middleware(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  // If live Supabase credentials are configured, perform token refresh & JWT validation
+  // 1. If Supabase keys are configured, validate and refresh JWT token
   if (supabaseUrl && supabaseAnonKey && !supabaseUrl.includes('placeholder')) {
     try {
       const supabase = createServerClient(
@@ -60,8 +60,16 @@ export async function middleware(request: NextRequest) {
         }
       );
 
-      // Refresh session if expired
-      await supabase.auth.getUser();
+      // Validate JWT and extract user session
+      const { data: { user } } = await supabase.auth.getUser();
+
+      // Forward authenticated user identity & role in headers to downstream components
+      if (user) {
+        response.headers.set('x-user-id', user.id);
+        response.headers.set('x-user-email', user.email || '');
+        response.headers.set('x-user-role', user.user_metadata?.role || 'farmer');
+        response.headers.set('x-auth-status', 'AUTHENTICATED');
+      }
     } catch (e) {
       console.warn('Supabase middleware auth check skipped:', e);
     }
