@@ -33,6 +33,9 @@ export interface Listing {
   status: ListingStatus;
   created_at: string;
   image_url?: string;
+  freshness?: string;
+  freshness_confidence?: number;
+  shelf_life?: string;
 }
 
 export type DemandFrequency = 'one_time' | 'weekly' | 'biweekly' | 'monthly';

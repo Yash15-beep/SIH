@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth-context';
-import { Sprout, Sparkles, CheckCircle2, ArrowRight, ArrowLeft, Check } from 'lucide-react';
+import { Sprout, Sparkles, CheckCircle2, ArrowRight, ArrowLeft, Check, Camera, Loader2, AlertCircle } from 'lucide-react';
 import seedData from '@/data/agmarknet_seed_data.json';
 
 export default function NewListingPage() {
@@ -21,6 +21,9 @@ export default function NewListingPage() {
   const [useSuggested, setUseSuggested] = useState(true);
   const [loading, setLoading] = useState(false);
   const [publishedId, setPublishedId] = useState<string | null>(null);
+  const [scanLoading, setScanLoading] = useState(false);
+  const [scanResult, setScanResult] = useState<{ freshness: string; freshness_confidence: number; shelf_life: string; image_url: string } | null>(null);
+  const [scanMessage, setScanMessage] = useState<string | null>(null);
 
   const [aiPriceData, setAiPriceData] = useState<{
     suggested_price: number;
@@ -55,6 +58,35 @@ export default function NewListingPage() {
     fetchAiPrice();
   }, [selectedCrop, qualityGrade]);
 
+  const handleScan = async (file?: File) => {
+    if (!file) return;
+    setScanLoading(true);
+    setScanMessage(null);
+    const formData = new FormData();
+    formData.append('file', file);
+    try {
+      const response = await fetch('/api/ai/scan-produce', { method: 'POST', body: formData });
+      const result = await response.json();
+      if (!response.ok || result.status !== 'ok') {
+        setScanMessage(result.detail || result.message || 'Unable to assess this photo.');
+        return;
+      }
+      const matchingCrop = seedData.crops.find((crop) => crop.name.toLowerCase() === result.produce.toLowerCase());
+      if (matchingCrop) setSelectedCrop(matchingCrop.name);
+      setQualityGrade(result.quality_grade);
+      setScanResult({
+        freshness: result.freshness,
+        freshness_confidence: result.freshness_confidence,
+        shelf_life: result.shelf_life,
+        image_url: URL.createObjectURL(file)
+      });
+    } catch {
+      setScanMessage('Fresh Vision is unavailable. Start the AI service and try again.');
+    } finally {
+      setScanLoading(false);
+    }
+  };
+
   const handlePublish = async () => {
     setLoading(true);
     try {
@@ -69,7 +101,12 @@ export default function NewListingPage() {
           price_per_kg: useSuggested ? aiPriceData.suggested_price : customPrice,
           harvest_date: harvestDate,
           quality_grade: qualityGrade,
-          image_url: selectedObj?.image
+          // The in-memory demo store has no object storage; keep the existing
+          // crop image rather than persisting a browser-only blob URL.
+          image_url: selectedObj?.image,
+          freshness: scanResult?.freshness,
+          freshness_confidence: scanResult?.freshness_confidence,
+          shelf_life: scanResult?.shelf_life
         })
       });
 
@@ -147,6 +184,20 @@ export default function NewListingPage() {
                   </button>
                 );
               })}
+            </div>
+
+            <div className="rounded-2xl border border-dashed border-brand-300 bg-brand-50/50 p-4">
+              <label className="flex cursor-pointer items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-brand-700 shadow-sm"><Camera className="w-5 h-5" /></span>
+                  <div><p className="text-sm font-bold text-slate-900">Fresh Vision quality scan</p><p className="text-xs text-slate-500">Upload a clear produce photo to set its quality grade.</p></div>
+                </div>
+                <span className="rounded-lg bg-brand-700 px-3 py-2 text-xs font-bold text-white">{scanLoading ? 'Scanning…' : 'Scan photo'}</span>
+                <input className="sr-only" type="file" accept="image/jpeg,image/png,image/webp" disabled={scanLoading} onChange={(event) => handleScan(event.target.files?.[0])} />
+              </label>
+              {scanLoading && <p className="mt-3 flex items-center gap-2 text-xs text-brand-800"><Loader2 className="h-4 w-4 animate-spin" /> Fresh Vision is checking freshness…</p>}
+              {scanMessage && <p className="mt-3 flex items-center gap-2 text-xs text-rose-700"><AlertCircle className="h-4 w-4" /> {scanMessage}</p>}
+              {scanResult && <div className="mt-3 flex items-center gap-3 rounded-xl bg-white p-3 text-xs"><img src={scanResult.image_url} alt="Scanned produce" className="h-12 w-12 rounded-lg object-cover" /><span><strong className="text-emerald-700">{scanResult.freshness}</strong> · {scanResult.freshness_confidence}% confidence<br />Estimated shelf life: {scanResult.shelf_life}. Quality grade updated automatically.</span></div>}
             </div>
 
             <button

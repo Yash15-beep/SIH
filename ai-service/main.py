@@ -7,7 +7,7 @@ Production AI Engine for SIH 2026 Problem Statement 26033:
 - Vehicle Routing Problem (VRP) Logistics Clustering
 """
 
-from fastapi import FastAPI, Query, Body, HTTPException
+from fastapi import FastAPI, Query, Body, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
@@ -16,6 +16,7 @@ from agmarknet_client import agmarknet_client
 from price_model import price_model
 from forecasting_model import forecast_model
 from vrp_optimizer import vrp_optimizer
+from fresh_vision import analyze_image
 
 app = FastAPI(
     title="KisanSetu AI Microservice",
@@ -58,7 +59,7 @@ def health_check():
         "status": "healthy",
         "service": "KisanSetu-AI-Microservice",
         "version": "2.0.0",
-        "models": ["AdaptivePriceModel", "DemandForecastModel", "VRPOptimizer", "AgmarknetClient"]
+        "models": ["AdaptivePriceModel", "DemandForecastModel", "VRPOptimizer", "AgmarknetClient", "FreshVision"]
     }
 
 # 1. Agmarknet Live Sync Endpoint (Method 1: data.gov.in)
@@ -133,6 +134,19 @@ def optimize_route_legacy(request: Dict[str, Any] = Body(...)):
     destination = stops[-1] if len(stops) > 1 else {"name": "Central Hub", "lat": 28.6304, "lng": 77.2177}
     result = vrp_optimizer.optimize_route(pickups=pickups, destination=destination)
     return {"data": result}
+
+# 5. Fresh Vision produce scan used by the farmer listing flow
+@app.post("/api/v1/vision/scan")
+async def scan_produce(file: UploadFile = File(...)):
+    raw = await file.read()
+    if not raw:
+        raise HTTPException(status_code=400, detail="Empty file upload.")
+    if len(raw) > 10 * 1024 * 1024:
+        raise HTTPException(status_code=413, detail="Image too large (max 10 MB).")
+    try:
+        return analyze_image(raw)
+    except (FileNotFoundError, ValueError) as exc:
+        raise HTTPException(status_code=503 if isinstance(exc, FileNotFoundError) else 400, detail=str(exc))
 
 if __name__ == "__main__":
     import uvicorn
