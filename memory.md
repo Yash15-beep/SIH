@@ -2,6 +2,14 @@
 
 ## Changes & Feature Log
 
+### [2026-09-05] Real Python Model Direct Inference Integration (Zero Microservice Overhead)
+* **Issue**: Ensure the original Keras models (`fruit_veg_identifier.h5` and `freshness_classifier_v2.h5`) perform genuine neural network inference without requiring a separate microservice.
+* **Resolution**:
+    * Enabled direct Python process execution for [fresh-vision.ts](file:///e:/SIH/src/lib/fresh-vision.ts) so Next.js seamlessly feeds the uploaded produce image directly into the Keras model.
+    * Added CLI execution block in [fresh_vision.py](file:///e:/SIH/ai-service/fresh_vision.py).
+    * Re-downloaded and verified MobileNetV2 ImageNet gatekeeper weights.
+* **Verification**: Verified with live model inference on test images returning genuine produce detection, freshness confidence, shelf-life, and Grade A/B/C quality classification.
+
 ### [2026-09-04] Full End-to-End Implementation of KisanSetu Platform (SIH 2026 PS 26033)
 * **Issue**: Implementation of SIH 2026 Problem Statement 26033 ("Multiple intermediaries reduce farmers' earnings and increase consumer prices", Ministry of Consumer Affairs, Food & Public Distribution / DoCA).
 * **Resolution**:

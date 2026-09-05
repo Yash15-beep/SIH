@@ -16,7 +16,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
   if (!order || !listing) return NextResponse.json({ message: 'Order or original listing not found.' }, { status: 404 });
 
   try {
-    const result = verifyExpectedCrop(await scanWithFreshVision(file), listing.crop_name);
+    const result = verifyExpectedCrop(await scanWithFreshVision(file, listing.crop_name), listing.crop_name);
     const freshness_match = Boolean(listing.freshness_key) && result.freshness_key === listing.freshness_key;
     const verification: VisionVerification = {
       status: result.status === 'ok' && freshness_match ? 'verified' : 'mismatch',
@@ -30,10 +30,10 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       detail: !listing.freshness_key
         ? 'The original listing has no Fresh Vision baseline, so this order cannot be quality-verified.'
         : result.status !== 'ok'
-        ? result.detail || 'Fresh Vision could not verify this produce.'
-        : freshness_match
-        ? `Verified: ${result.produce} matches the original ${result.freshness} condition.`
-        : `Freshness changed from ${listing.freshness} to ${result.freshness}.`
+          ? result.detail || 'Fresh Vision could not verify this produce.'
+          : freshness_match
+            ? `Verified: ${result.produce} matches the original ${result.freshness} condition.`
+            : `Freshness changed from ${listing.freshness} to ${result.freshness}.`
     };
     db.updateOrderVerification(order.id, stage, verification);
     return NextResponse.json({ data: verification });

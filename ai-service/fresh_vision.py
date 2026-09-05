@@ -91,3 +91,11 @@ def analyze_image(raw):
         "freshness_confidence": round(float(freshness_probabilities[freshness_index]) * 100, 2),
         "shelf_life": {"very_fresh": "5-7 days", "fresh": "3-5 days", "slightly_rotten": "1-2 days", "rotten": "Discard", "very_rotten": "Discard"}[freshness_key],
     }
+
+
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) > 1:
+        with open(sys.argv[1], "rb") as f:
+            print(json.dumps(analyze_image(f.read())))
+

@@ -10,12 +10,13 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const result = await scanWithFreshVision(file);
-    return NextResponse.json(typeof expectedCrop === 'string' ? verifyExpectedCrop(result, expectedCrop) : result);
+    const cropStr = typeof expectedCrop === 'string' ? expectedCrop : undefined;
+    const result = await scanWithFreshVision(file, cropStr);
+    return NextResponse.json(cropStr ? verifyExpectedCrop(result, cropStr) : result);
   } catch (error) {
     return NextResponse.json(
-      { message: error instanceof Error ? error.message : 'Fresh Vision is unavailable. Start the AI service and try again.' },
-      { status: 503 }
+      { message: error instanceof Error ? error.message : 'Fresh Vision scan could not be processed.' },
+      { status: 500 }
     );
   }
 }
